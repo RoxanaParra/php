@@ -1,6 +1,6 @@
 // Inicializar el mapa centrado en la ubicación del negocio
 var map = L.map('map').setView([40.416775, -3.703790], 13); // Coordenadas de Madrid, por ejemplo
-
+        
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© Roxana Parra'
@@ -11,63 +11,46 @@ var marker = L.marker([40.416775, -3.703790]).addTo(map)
     .bindPopup('Crea tus Momentos')
     .openPopup();
 
-// Variable para guardar la referencia de la ruta y el marcador del cliente
-var rutaActual = null;
-var marcadorCliente = null;
-
 // Función para calcular la ruta (utilizando geocodificación)
 function calcularRuta() {
-    var ubicacionCliente = document.getElementById('ubicacionCliente').value;
 
-    // Geocodificación para convertir la dirección en coordenadas
-    var geocoder = L.Control.Geocoder.nominatim();
-    geocoder.geocode(ubicacionCliente, function(results) {
-        if (results.length > 0) {
-            var clienteCoordenadas = results[0].center;
+    let coordinates = {
+        lat:0, 
+        lng: 0
+    };
 
-            //Si ya existe un marcador del cliente, eliminarlo antes de crear uno nuevo
-
-            if (marcadorCliente) {
-                marcadorCliente.remove ();
-            }
+    // Obtener la ubicación del cliente por defecto del navegador
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            coordinates.lat = position.coords.latitude;
+            coordinates.lng = position.coords.longitude;
 
             // Añadir un marcador en la ubicación del cliente
-
-            marcadorCliente = L.marker(clienteCoordenadas).addTo(map)
-                .bindPopup('Tu ubicación: ' + ubicacionCliente)
+            L.marker([coordinates.lat, coordinates.lng]).addTo(map)
+                .bindPopup('Cliente')
                 .openPopup();
 
-            // Si ya hay una ruta dibujada, eliminarla
-            if (rutaActual) {
-                rutaActual.remove();
-            }
+            // Añadir un marcador en la ubicación de Madrid
+            L.marker([40.416775, -3.703790]).addTo(map)
+                .bindPopup('Madrid')
+                .openPopup();
 
-            // Dibujar una nueva línea entre la ubicación del negocio y la del cliente
-            rutaActual = L.polyline([marker.getLatLng(), clienteCoordenadas], { color: 'blue' }).addTo(map);
+            // Dibujar una línea entre la ubicación del negocio y la del cliente
+            var ruta = L.polyline([[40.416775, -3.703790], [coordinates.lat, coordinates.lng]], { color: 'blue' }).addTo(map);
 
             // Ajustar el zoom para ver ambas ubicaciones
-            map.fitBounds(rutaActual.getBounds());
-        } else {
-            alert('No se pudo encontrar la ubicación');
-        }
-    });
-}
-
-function limpiarRuta() { 
-    // Limpia el campo de entrada del cliente
-    document.getElementById('ubicacionCliente').value = '';
-
-    //Eliminar rutas que existan en el mapa
-    if (rutaActual) {
-        rutaActual.remove(); // Eliminar la ruta del mapa correctamente
-        rutaActual = null; // Reiniciar la variable
-     }
-
-     //Eliminar el PopUp
-    if (marcadorCliente) {
-        marcadorCliente.remove(); //Eliminar el marcador del cliente y el PopUp
-        marcadorCliente = null; //Se reinicia la variable 
+            map.fitBounds(ruta.getBounds());
+        }, error => {
+            console.error("Error obteniendo la ubicación: ", error);
+        }, {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        });
     } else {
-        alert('No hay ruta para limpiar');
+        console.error("Geolocalización no disponible");
     }
 }
+
+
+calcularRuta();
