@@ -10,7 +10,12 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     </head>
     <body>
-    <div id="navbar" class="nav"></div>
+    <div id="navbar" class="nav">
+            <?php
+                include_once('../navbar.php')
+            ?>
+        </div>
+
     <section id="contacto">
       <div class="container">
         <h1 class="text-center" id="EspacioTitulo"> Contacto </h1>
@@ -52,8 +57,12 @@
 
     </div>
     
-    <!---Se define un div que alberga el footer, es manipulado a través de un archivo de Javascript-->
-    <div id="footer"></div>
+    <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
+    <div id="footer">
+            <?php 
+            include_once('../footer.php')
+            ?>
+    </div>
     
     <!--Se agregan los enlaces de Bootstrap y Javascript necesarios para llamar a las funcionalidades de la pagina-->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -65,7 +74,6 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
     crossorigin="anonymous"></script>
     <script src="../public/javascript/navbarUtil.js"> </script>
-    <script src="../public/javascript/footer.js"></script>
     <script src="../public/javascript/direccion.js"></script>  
   </body>
 </html>

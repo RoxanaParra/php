@@ -12,7 +12,11 @@
         <!--El siguiente div define un contenedor preparado para albergar una barra de navegación, 
         esté div puede ser manipulado a través de Javascript-->
 
-        <div id="navbar" class="nav"></div>
+        <div id="navbar" class="nav">
+            <?php
+                include_once('navbar.php')
+            ?>
+        </div>
         
         <!--Primera seccion-->
         
@@ -121,9 +125,13 @@
             </div>
         </section>
         
-        <!---Se define un div que alberga el footer, es manipulado a través de un archivo de Javascript-->
+        <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
         
-        <div id="footer"></div>
+        <div id="footer">
+            <?php 
+            include_once('footer.php')
+            ?>
+        </div>
         
         <!--Se agregan los enlaces de Bootstrap y Javascript necesarios para llamar a las funcionalidades de la pagina-->
         
@@ -132,7 +140,6 @@
         crossorigin="anonymous"></script>
         <script src="public/javascript/productos.js"> </script>
         <script src="public/javascript/navbarUtil.js"> </script>
-        <script src="public/javascript/footer.js"></script>
         <script src="public/javascript/banner.js"></script>
     </body>
 </html>

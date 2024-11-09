@@ -12,7 +12,11 @@
         <!--El siguiente div define un contenedor preparado para albergar una barra de navegación, 
         esté div puede ser manipulado a través de Javascript-->
         
-        <div id="navbar" class="nav"></div>
+        <div id="navbar" class="nav">
+            <?php
+                include_once('../navbar.php')
+            ?>
+        </div>
         
         <!-- Se crea una sección con el id "galeria" y la clase "sectionPadding", con un margen superior de 100px -->
          
@@ -191,8 +195,12 @@
             </div>
         </section>
         
-        <!---Se define un div que alberga el footer, es manipulado a través de un archivo de Javascript-->
-        <div id="footer"></div>
+        <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
+        <div id="footer">
+            <?php 
+            include_once('../footer.php')
+            ?>
+        </div>
 
         <!--Se agregan los enlaces de Bootstrap y Javascript necesarios para llamar a las funcionalidades de la pagina entre 
         ellos los archivos de la librería utilizada para la Galeria-->
@@ -211,7 +219,6 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
         crossorigin="anonymous"></script>
         <script src="../public/javascript/navbarUtil.js"> </script>
-        <script src="../public/javascript/footer.js"></script>
     </body>
 
 </html>

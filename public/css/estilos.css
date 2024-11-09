@@ -50,7 +50,6 @@
         margin: 0 auto;
     }
     .card {
-        background-color: white;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border: none;
         overflow: hidden;
@@ -126,7 +125,7 @@
         padding: 15px 30px;
         font-size: 1.2em;
         color: white;
-        background-color: #ca53c0;
+        background-color: #de80d6;
         border: none;
         border-radius: 5px;
         text-decoration: none;
@@ -366,4 +365,19 @@
         text-decoration: underline; /* Solo subrayar cuando el cursor pase encima */
     }
 
+    /*Espacio de acceso y registro */
+
+    .EspacioDebajoDelNavbar { 
+        margin-top: 120px;
+    }
+
+    .TituloAcceso {
+        text-align: center;
+    }
+
+   #Centrar {
+    text-align: center;
+   }
+
+   
 

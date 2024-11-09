@@ -23,7 +23,7 @@ function mostrarProductos() {
                         <div class="card-body">
                             <h5 class="card-tittle">${producto.titulo}</h5>
                             <p class="card-text">${producto.cuerpo}</p>
-                            <a href="views/presupuesto.html" class="btn">Comprar</a>
+                            <a href="views/presupuesto.php" class="btn">Comprar</a>
                         </div>
                     </div>
                 </div>`
