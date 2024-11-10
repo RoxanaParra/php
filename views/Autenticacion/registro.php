@@ -20,59 +20,60 @@
         </div>
 
         <div class="EspacioDebajoDelNavbar"></div>
-        
 
-         <!--<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="card" style="width: 18rem;">
-        <img src="../../public/img/fondo.png" class="card-img-top" alt="...">
- </div>-->
  
         <div class="container mt-5">
             <div class="card">
                 <div class="card-header">
                     <h3>Registro de Usuario</h3>
-                 </div>
+                </div>
                   <div class="card-body">
-                     <form>
+                    <div class="container">
+                    <form method="post" action="../../core/auth/registro.php"> 
                         <!-- Nombre -->
                          <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
                         <!-- Apellidos -->
                          <div class="mb-3">
                             <label for="apellidos" class="form-label">Apellidos</label>
-                             <input type="text" class="form-control" id="apellidos" required>
+                             <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                            </div>
+                            <!-- Nombre de Usuario -->
+                         <div class="mb-3">
+                            <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
+                             <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" required>
                             </div>
                             <!-- Email -->
                              <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <!-- Teléfono -->
                              <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" required>
+                                <input type="tel" class="form-control" id="telefono" name="telefono" required>
                             </div>
                             <!-- Fecha de Nacimiento -->
                              <div class="mb-3">
                                 <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control" id="fechaNacimiento" required>
+                                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
                             </div>
                             <!-- Dirección -->
                              <div class="mb-3">
                                 <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" required>
+                                <input type="text" class="form-control" id="direccion" name="direccion" required>
                             </div>
                             <!-- Sexo -->
                              <div class="mb-3">
                                 <label class="form-label">Sexo</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="sexo" id="sexoMasculino" value="Masculino" required>
+                                    <input class="form-check-input" type="radio" name="sexo" id="sexoMasculino" value="M" required>
                                      <label class="form-check-label" for="sexoMasculino">Masculino</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sexo" id="sexoFemenino" value="Femenino" required>
+                                        <input class="form-check-input" type="radio" name="sexo" id="sexoFemenino" value="F" required>
                                         <label class="form-check-label" for="sexoFemenino">Femenino</label>
                                     </div>
                                 </div>
@@ -86,9 +87,10 @@
                                     <a href="#" class="card-link custom-link">Registrarse como Admin</a>
                                 </div>
                             </form>
-                        </div>
                     </div>
-                </div>
+                  </div>
+            </div>
+        </div>
 
  <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
         

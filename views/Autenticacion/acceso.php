@@ -25,7 +25,9 @@
                 <div class="card-header">
                     <h2 class="TituloAcceso">Iniciar Sesión</h2>
                 </div>
+                
                 <div class="card-body">
+                    <div class ="container">
                     <div class="d-flex justify-content-center mb-3">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
@@ -52,6 +54,8 @@
                         <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
                     </form>
                 </div>
+            </div>
+                    
                 <div class="card-body" id="Centrar">
                     <a href='#' class="card-link">Olvide mi Contraseña</a>
                 </div>

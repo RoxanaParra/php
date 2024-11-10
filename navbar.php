@@ -14,6 +14,7 @@ function ObtenerRutas() {
             'galeria.php',
             'presupuesto.php',
             'contacto.php',
+            'noticias.php',
             'Autenticacion/acceso.php'
         ];
     } else {
@@ -22,6 +23,7 @@ function ObtenerRutas() {
             'views/galeria.php',
             'views/presupuesto.php',
             'views/contacto.php',
+            'views/noticias.php',
             'views/Autenticacion/acceso.php'
         ];
     }
@@ -32,6 +34,7 @@ function ObtenerRutas() {
             '../galeria.php',
             '../presupuesto.php',
             '../contacto.php',
+            '../noticias.php',
             'acceso.php'
         ];
     }
@@ -83,15 +86,20 @@ function renderNavbar() {
                         <li class='nav-item'>
                             <a class='nav-link' id='nav-contacto' href='$routes[3]'>Contacto</a>
                         </li>
+                        <li class='nav-item'>
+                            <a class='nav-link' id='nav-noticias' href='$routes[4]'>Noticias</a>
+                        </li>
                     </ul>
 
                     <span class='navbar-text'>
-                    <a class='btn btn-primary' id='Acceder-button' href='$routes[4]'>Acceder</a>
+                    <a class='btn btn-primary' id='Acceder-button' href='$routes[5]'>Acceder</a>
                     </span>
                 </div>
             </div>
         </nav>";
-}
 
+}
 echo renderNavbar(); 
+
+
 ?>
