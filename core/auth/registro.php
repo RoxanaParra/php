@@ -1,4 +1,5 @@
 <?php
+
 require('../conexion/conexion.php');
 
 function registroUsuario() {

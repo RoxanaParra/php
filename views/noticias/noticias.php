@@ -45,7 +45,8 @@
  <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
         
  <div id="footer">
-        <?php include_once('../footer.php') ?>
+        <?php include_once('../footer.php')
+        ?>
     </div>
         
         <!--Se agregan los enlaces de Bootstrap necesarios para llamar a las funcionalidades de la pagina-->

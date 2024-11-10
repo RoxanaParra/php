@@ -15,6 +15,7 @@ function ObtenerRutas() {
             'presupuesto.php',
             'contacto.php',
             'noticias.php',
+            'citas/citas.php',
             'Autenticacion/acceso.php'
         ];
     } else {
@@ -24,6 +25,7 @@ function ObtenerRutas() {
             'views/presupuesto.php',
             'views/contacto.php',
             'views/noticias.php',
+            'views/citas/citas.php',
             'views/Autenticacion/acceso.php'
         ];
     }
@@ -88,6 +90,9 @@ function renderNavbar() {
                         </li>
                         <li class='nav-item'>
                             <a class='nav-link' id='nav-noticias' href='$routes[4]'>Noticias</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a class='nav-link' id='nav-noticias' href='$routes[5]'>Citas</a>
                         </li>
                     </ul>
 
