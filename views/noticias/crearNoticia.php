@@ -21,45 +21,45 @@
     <div class="EspacioDebajoDelNavbar"></div>
 
     <div class="container mt-5">
-    <div class="card shadow-lg">
-            <h3 class="crearNoticia">Crear Nueva Noticia</h3>
-        <div class="card-body">
-            <form method="GET" action="../../core/controladores/NoticiasControlador.php" enctype="multipart/form-data">
-                <!-- Campo Título -->
-                <div class="mb-3">
-                    <label for="titulo" class="form-label">Título:</label>
-                    <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Título de la noticia" required>
-                </div>
+        <div class="card shadow-lg">
+                <h3 class="crearNoticia">Crear Nueva Noticia</h3>
+            <div class="card-body">
+                <form method="POST" action="../../core/controladores/NoticiasControlador.php" enctype="multipart/form-data">
+                    <!-- Campo Título -->
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título:</label>
+                        <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Título de la noticia" required>
+                    </div>
 
-                <!-- Campo Fecha -->
-                <div class="mb-3">
-                    <label for="fecha" class="form-label">Fecha:</label>
-                    <input type="date" id="fecha" name="fecha" class="form-control" required>
-                </div>
+                    <!-- Campo Fecha -->
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha:</label>
+                        <input type="date" id="fecha" name="fecha" class="form-control" required>
+                    </div>
 
-                <!-- Campo Texto -->
-                <div class="mb-3">
-                    <label for="texto" class="form-label">Texto:</label>
-                    <textarea id="texto" name="texto" class="form-control" rows="5" placeholder="Contenido de la noticia" required></textarea>
-                </div>
+                    <!-- Campo Texto -->
+                    <div class="mb-3">
+                        <label for="texto" class="form-label">Texto:</label>
+                        <textarea id="texto" name="texto" class="form-control" rows="5" placeholder="Contenido de la noticia" required></textarea>
+                    </div>
 
-                <!-- Campo Imagen -->
-                <div class="mb-3">
-                    <label for="imagen" class="form-label">Imagen:</label>
-                    <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*">
-                </div>
+                    <!-- Campo Imagen -->
+                    <div class="mb-3">
+                        <label for="imagen" class="form-label">Imagen:</label>
+                        <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required>
+                    </div>
 
-                <input type="hidden" name="method" value="store">
+                    <input type="hidden" name="method" value="store">
 
-                <br>
+                    <br>
 
-                <!-- Botón Submit -->
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Crear Noticia</button>
-                </div>
-            </form>
+                    <!-- Botón Submit -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Crear Noticia</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 </div>
 
 
