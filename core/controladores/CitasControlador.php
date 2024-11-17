@@ -1,6 +1,6 @@
 <?php
 
-require_once '../conexion/conexion.php';
+require_once '../../conexion/conexion.php';
 
 function arranque() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -24,7 +24,7 @@
         <h3 class="text-center p-3">Editar Noticia</h3>
         <div class="card-body">
             <!-- Formulario de Edición -->
-            <form method="POST" action="../../core/controladores/NoticiasControlador.php" enctype="multipart/form-data">
+            <form method="POST" action="../../core/controladores/NoticiasControlador.php">
                 <!-- Campo Oculto para ID de la Noticia -->
                 <input type="hidden" id="idNoticia" name="idNoticia" value="<?= htmlspecialchars($noticia['idNoticia'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
 
@@ -44,20 +44,22 @@
 
                 <!-- Contenido de la Noticia -->
                 <div class="mb-3">
-                    <label for="contenido" class="form-label">Contenido:</label>
-                    <textarea id="contenido" name="contenido" class="form-control" rows="5" required><?= htmlspecialchars($noticia['contenido'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                    <label for="texto" class="form-label">Contenido:</label>
+                    <textarea id="texto" name="texto" class="form-control" rows="5" required><?= htmlspecialchars($noticia['contenido'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
                 </div>
 
                 <!-- Imagen de la Noticia -->
                 <div class="mb-3">
-                    <label for="imagen" class="form-label">Imagen (opcional):</label>
-                    <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*">
+                    <label for="imagen" class="form-label">Imagen:</label>
+                    <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required>
+                    
                     <?php if (!empty($noticia['imagen'])): ?>
                         <small class="form-text">Imagen actual: <?= htmlspecialchars($noticia['imagen'], ENT_QUOTES, 'UTF-8') ?></small>
                     <?php endif; ?>
                 </div>
 
                 <input type="hidden" name="method" value="update">
+                <input type="hidden" name="id" value="<?php isset($noticia['idNoticia']) ? $noticia['idNoticia'] : '' ?>">
 
                 <!-- Botón de Guardar Cambios -->
                 <div class="d-grid">
