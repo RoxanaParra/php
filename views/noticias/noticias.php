@@ -26,32 +26,10 @@
     <div class="row">
 
     <?php
-    // Datos de prueba
-    $noticias = [
-        [
-            'titulo' => 'Nuevas Tazas Personalizadas',
-            'texto' => 'Descubre nuestra nueva colección de tazas personalizadas perfectas para cualquier ocasión.',
-            'fecha' => '2023-10-01',
-            'idUser' => '1',
-            'idNoticia' => '101'
-        ],
-        [
-            'titulo' => 'Lanzamiento de Camisetas Únicas',
-            'texto' => 'Presentamos nuestras camisetas únicas personalizadas, diseñadas para destacar en cualquier evento.',
-            'fecha' => '2023-09-25',
-            'idUser' => '2',
-            'idNoticia' => '102'
-        ],
-        [
-            'titulo' => 'Promociones de Fin de Año',
-            'texto' => 'Aprovecha nuestras promociones de fin de año en todos nuestros productos personalizados.',
-            'fecha' => '2023-09-20',
-            'idUser' => '3',
-            'idNoticia' => '103'
-        ],
-    ];
 
-    // Renderizado de las noticias
+    include_once('../../core/controladores/NoticiasControlador.php');
+
+    $noticias = index();
     foreach ($noticias as $noticia) {
         echo "
         <div class='col-md-6 col-lg-4 mb-4'>

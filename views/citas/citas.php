@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noticias sobre Regalos Personalizados</title>
+    <title>Lista de Citas Registradas</title>
     <!-- Cargar CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -11,46 +11,50 @@
 </head>
 <body>
 
-<!--El siguiente div define un contenedor preparado para albergar una barra de navegación, 
-        esté div puede ser manipulado a través de php-->
-
-        <div id="navbar" class="nav">
+    <!-- Barra de navegación -->
+    <div id="navbar" class="nav">
         <?php include_once('../../navbar.php') ?>
     </div>
-        
+
+    <div class="EspacioDebajoDelNavbar"></div>
+    
+    <!-- Contenedor de citas -->
     <div class="container">
-        <h1>Citas</h1>
-        <form method="post" action="../../core/controladores/CitasControlador.php">
-            <!-- Nombre -->
-            <div class="mb-3">
-                <label for="usuario" class="form-label">Usuario</label>
-                <select class="form-select" id="usuario" name="usuario" required>
-                    <option value="">Seleccionar usuario</option>
-                    <option value=4>Pedro Perez</option>
-                    <option value=5>Ana Gomez</option>
-                </select>
-            </div>
+        <h2 class="text-center mt-5 mb-5">Lista de Citas Registradas</h2>
+        <div class="row">
 
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Fecha de la Cita</label>
-                <input type="date" class="form-control" id="fecha_cita" name="fecha" required>
-            </div>
+        <?php
+        include_once('../../core/controladores/CitasControlador.php');
 
-            <div class="mb-3">
-                <label for="motivoCita" class="form-label">Motivo de la Cita</label>
-                <textarea class="form-control" id="motivo_cita" name="motivo" required></textarea>
-            </div>
+        $citas = index(); // Asegúrate de que la función 'index()' en el controlador de citas retorne todas las citas.
+        foreach ($citas as $cita) {
+            echo "
+            <div class='col-md-6 col-lg-4 mb-4'>
+                <div class='card shadow-sm'>
+                    <div class='card-body'>
+                        <h5 class='card-title text-dark mb-3'>Cliente: " . htmlspecialchars($cita['nombre']) . "</h5>
+                        <p class='card-text'><strong>Fecha:</strong> " . htmlspecialchars($cita['fecha']) . "</p>
+                        <p class='card-text'><strong>Hora:</strong> " . htmlspecialchars($cita['hora']) . "</p>
+                        <p class='card-text'><strong>Motivo:</strong> " . htmlspecialchars(substr($cita['motivo'], 0, 80)) . "...</p>
+                        <div class='d-flex justify-content-between align-items-center'>
+                            <a href='verCita.php?id=" . htmlspecialchars($cita['idCita']) . "' class='btn btn-outline-primary btn-sm'>Mostrar</a>
+                            <form action='../../core/controladores/CitasControlador.php' method='POST' style='display:inline;'>
+                                <input type='hidden' name='method' value='delete'>
+                                <input type='hidden' name='idCita' value='" . htmlspecialchars($cita['idCita']) . "'>
+                                <button type='submit' class='btn btn-danger btn-sm'>Eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>";
+        }
+        ?>
 
-            <button type="submit" class="btn btn-primary w-100">Registrar</button>
-            <div class="card-body" id="Centrar">
-                <a href="#" class="card-link custom-link">Registrarse como Admin</a>
-            </div>
-        </form>
+        </div>
     </div>
 
- <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
-        
- <div id="footer">
+    <!-- Footer -->
+    <div id="footer">
         <?php include_once('../../footer.php') ?>
     </div>
 

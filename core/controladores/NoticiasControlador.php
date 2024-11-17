@@ -1,13 +1,18 @@
 <?php
 
-require_once('../conexion/conexion.php');
+require_once('../../conexion/conexion.php');
+
 
 function handleRequest() {
     if (isset($_POST ['method'])) {
         switch ($_POST ['method']) {
-            case 'store':
-                store();
+            case 'crear':
+                crear();
                 break;
+            case 'delete':
+                delete();
+                break;
+
         }
     }
 }
@@ -20,7 +25,7 @@ function index() {
 
     $stmt->execute ();
     
-    return $stmt ->fetch();
+    return $stmt ->fetchAll();
 }
 
 //Crea noticias de la base de datos
@@ -110,8 +115,8 @@ function mostrar(int $id) {
         }
     }
 
-//elimina una noticia de la base de datos
-function eliminar(int $id) {
+    //elimina una noticia de la base de datos
+  function eliminar(int $id) {
     $pdo = crearConexion();
 
     $sql = "DELETE FROM noticias WHERE id = :id";
@@ -129,8 +134,8 @@ function eliminar(int $id) {
         exit();
     }
 
-}
+  }
 
-handleRequest()
+  handleRequest()
 
 ?>
