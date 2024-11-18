@@ -21,12 +21,11 @@
     <div class="EspacioDebajoDelNavbar"></div>
     
 <!-- Contenedor de noticias -->
+
 <div class="container">
-    <h2 class="text-center mt-5 mb-5">Últimas Noticias sobre Regalos Personalizados</h2>
+    <h2 class="text-center mt-5 mb-5">¡Últimas noticias sobre Regalos personalizados!</h2>
     <div class="row">
-
     <?php
-
     include_once('../../core/controladores/NoticiasControlador.php');
 
     $noticias = index();
@@ -39,9 +38,9 @@
                     <h5 class='card-title text-dark mb-3'>" . htmlspecialchars($noticia['titulo']) . "</h5>
                     <p class='card-text text-muted'>" . htmlspecialchars(substr($noticia['texto'], 0, 80)) . "...</p>
                     <p class='text-muted mb-4'><small>Publicado el " . htmlspecialchars($noticia['fecha']) . " | Usuario " . htmlspecialchars($noticia['idUser']) . "</small></p>
-                    <div class='d-flex justify-content-between align-items-start'>
-                        <a href='verNoticia.php?id=" . htmlspecialchars($noticia['idNoticia']) . "' class='btn btn-outline-primary btn-sm'>Mostrar</a>
-                         <a href='editarNoticia.php?id=" . htmlspecialchars($noticia['idNoticia']) . "' class='btn btn-outline-primary btn-sm'>Editar</a>
+                    <div class='d-flex justify-content-between align-items-center'>
+                        <a href='create.php' class='btn btn-outline-primary btn-sm'>Mostrar</a>
+                        <a href='update.php?id=" . htmlspecialchars($noticia['idNoticia']) . "' class='btn btn-outline-primary btn-sm'>Editar</a>
                         <form action='../../core/controladores/NoticiasControlador.php' method='POST' style='display:inline;'>
                             <input type='hidden' name='method' value='delete'>
                             <input type='hidden' name='idNoticia' value='" . htmlspecialchars($noticia['idNoticia']) . "'>

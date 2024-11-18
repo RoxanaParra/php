@@ -1,7 +1,7 @@
 <?php
 function crearConexion() {
     $host = 'localhost';
-    $db = 'webpage';
+    $db = 'paginawebphp';
     $user = 'root';
     $pass = '';
 
