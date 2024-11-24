@@ -1,10 +1,12 @@
 <?php
 
-require_once '../../conexion/conexion.php';
+require_once __DIR__ . '/../conexion/conexion.php';
 
 function arranque() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        crear();
+    switch ($_POST['method']) {
+        case 'crear':
+            crear();
+            break;
     }
 }
 
@@ -37,6 +39,10 @@ function crear() {
         $statement->bindParam(':motivo', $motivo);
 
         $statement->execute();
+
+        if ($statement->execute()) {
+            header('Location: ../../views/citas/crearCita.php');
+        }
     }catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

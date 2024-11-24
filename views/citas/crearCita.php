@@ -27,8 +27,8 @@
                 <label for="usuario" class="form-label">Usuario</label>
                 <select class="form-select" id="usuario" name="usuario" required>
                     <option value="">Seleccionar usuario</option>
-                    <option value=4>Pedro Perez</option>
-                    <option value=5>Ana Gomez</option>
+                    <option value="5">Pedro Perez</option>
+                    <option value="9">Ana Gomez</option>
                 </select>
             </div>
 
@@ -41,6 +41,8 @@
                 <label for="motivoCita" class="form-label">Motivo de la Cita</label>
                 <textarea class="form-control" id="motivo_cita" name="motivo" required></textarea>
             </div>
+
+            <input type="hidden" name="method" value="crear">
 
             <button type="submit" class="btn btn-primary w-100">Registrar</button>
         
