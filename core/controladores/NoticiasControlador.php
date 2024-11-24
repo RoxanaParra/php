@@ -19,16 +19,23 @@
         }
     }
 
+    
     function index() {
         $pdo = crearConexion();
-
+    
         $sql = "SELECT * FROM noticias";
-
+    
         $stmt = $pdo->prepare($sql);
-
-        $stmt->execute ();
-        
-        return $stmt ->fetchAll();
+        $stmt->execute();
+    
+        $noticias = $stmt->fetchAll();
+    
+        if (empty($noticias)) {
+            echo "No se encontraron noticias en la base de datos.";
+            exit;
+        }
+    
+        return $noticias;
     }
 
     //Crea noticias de la base de datos
