@@ -80,6 +80,7 @@
             </div>
             
             <input type="hidden" name="method" value="update">
+            <input type="hidden" name="id" value="<?= $id ?>">
 
             <!-- Botón de envío -->
             <div class="text-center">

@@ -8,10 +8,7 @@ function handleRequest() {
             case 'store':
                 storeUser();
                 break;
-            case 'mostrar':
-                mostrarUsuario();
-                break;
-            case 'eliminar':
+            case 'delete':
                 eliminarUsuario();
                 break;
             case 'update':
@@ -37,7 +34,7 @@ function indexUsers() {
 function mostrarUsuario(int $id) {
     $pdo = crearConexion();
 
-    $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser WHERE users_data.idUser = :id";
+    $sql = "SELECT * FROM users_data JOIN users_login ON users_data.idUser = users_login.idUser WHERE users_data.idUser = :id";
 
     $stmt = $pdo->prepare($sql);
 
@@ -134,7 +131,7 @@ function editarUsuario(int $id) {
     }
 
     $sql = "UPDATE users_data 
-            JOIN users_login ON user_data.idUser = users_login.idUser 
+            JOIN users_login ON users_data.idUser = users_login.idUser 
             SET users_data.nombre = :nombre, 
                 users_data.apellidos = :apellidos,
                 users_data.email = :email,
@@ -145,7 +142,7 @@ function editarUsuario(int $id) {
                 users_login.usuario = :usuario,
                 users_login.rol = :rol" .
                 ($password ? ", users_login.password = :password" : "") .
-           " WHERE user_data.idUser = :id";
+           " WHERE users_data.idUser = :id";
 
     
 

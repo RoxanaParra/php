@@ -54,7 +54,7 @@
                                 <td>'.$usuario['email'].'</td>
                                 <td>
                                     <a href="../../views/usuarios/editarUsuario.php?id='.$usuario['idUser'].'" class="btn btn-primary"><i class="fa fa-pencil icon-small"></i></a>
-                                    <form action="../../core/controlador/UsuariosControlador.php" method="POST">
+                                    <form action="../../core/controladores/UsuariosControlador.php" method="POST">
                                         <input type="hidden" name="idUser" value="'.$usuario['idUser'].'">
                                         <input type="hidden" name="method" value="delete">
                                         <button type="submit" class="btn btn-danger">

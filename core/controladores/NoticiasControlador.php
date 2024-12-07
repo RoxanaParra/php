@@ -8,20 +8,19 @@
                 case 'store':
                     crearNoticia();
                     break;
-                case 'eliminar':
+                case 'delete':
                     eliminarNoticia();
                     break;
-                case 'mostrar':
+                case 'show':
                     mostrarNoticia();
                     break;
-                case 'editar':
+                case 'update':
                     editarNoticia();
                     break;
             }
         }
     }
 
-    
     function index() {
         $pdo = crearConexion();
     
@@ -85,7 +84,6 @@
         $stmt->execute();
         
         return $stmt ->fetch();
-
     }
 
         //edita una noticia en la base de datos
@@ -96,7 +94,7 @@
             $titulo = $_POST['titulo'];
             $fecha = $_POST['fecha'];
             $texto = $_POST['texto'];
-            $imagen = $_POST['imagen'];
+            $imagen = $_FILES['imagen']['name'];
             $idUser = $_POST['idUser'];
 
             $sql = "UPDATE noticias SET 
@@ -104,7 +102,7 @@
             fecha = :fecha, 
             texto = :texto, 
             imagen = :imagen,
-            idUser = idUser
+            idUser = :idUser
             WHERE idNoticia = :idNoticia";
 
             $stmt = $pdo->prepare($sql);
@@ -126,7 +124,7 @@
     }
 
     //elimina una noticia de la base de datos
-    function eliminarNoticia(int $id) {
+    function eliminarNoticia() {
         $pdo = crearConexion();
 
         $id = $_POST ['id'];

@@ -19,7 +19,9 @@
     </div>
 
     <?php 
-    include_once '../../core/controladores/UsuariosControlador.php'
+        include_once '../../core/controladores/UsuariosControlador.php';
+
+        $usuarios = indexUsers();
     ?>
 
     <div class="EspacioDebajoDelNavbarNoticia"></div>

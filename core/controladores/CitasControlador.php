@@ -10,10 +10,10 @@ function handleRequest() {
             case 'delete':
                 eliminarCita();
                 break;
-            case 'mostrar':
+            case 'show':
                 mostrarCita();
                 break;
-            case 'editar':
+            case 'update':
                 editarCita();
                 break;
         }
@@ -88,7 +88,7 @@ function editarCita(): void {
     $idUser = $_POST['idUser'];
 
     $sql = "UPDATE citas SET 
-            motivo_cita = :motivo_ cita, 
+            motivo_cita = :motivo_cita, 
             fecha_cita = :fecha_cita,
             idUser = :idUser
             WHERE idCita = :idCita";
@@ -108,8 +108,10 @@ function editarCita(): void {
         exit();
     }
 }
-    function eliminarCita(int $id) {
+    function eliminarCita() {
         $pdo = crearConexion();
+
+        $idCita = $_POST['id'];
     
         $sql = "DELETE FROM citas WHERE idCita = :idCita";
     
