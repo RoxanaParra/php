@@ -19,34 +19,52 @@
     </div>
 
     <div class="EspacioDebajoDelNavbar"></div>
-    <div class="container">
-        <h1 class="text-center">Crear Cita</h1>
-        <form method="post" action="../../core/controladores/CitasControlador.php">
-            <!-- Nombre -->
+
+    <!-- Contenedor Principal -->
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+      <div class="card" style="width: 30rem;">
+        <div class="card-body">    
+          <form action="../../core/controladores/CitasControlador.php" method="POST">
+            <!-- Campo para el título de la cita -->
             <div class="mb-3">
-                <label for="usuario" class="form-label">Usuario</label>
-                <select class="form-select" id="usuario" name="usuario" required>
-                    <option value="">Seleccionar usuario</option>
-                    <option value="5">Pedro Perez</option>
-                    <option value="9">Ana Gomez</option>
-                </select>
+              <label for="titulo" class="form-label">Título de la Cita</label>
+              <input type="text" class="form-control" id="titulo" name="titulo" required>
             </div>
 
+            <!-- Campo para la fecha de la cita -->
             <div class="mb-3">
-                <label for="nombre" class="form-label">Fecha de la Cita</label>
-                <input type="date" class="form-control" id="fecha_cita" name="fecha" required>
+              <label for="fecha_cita" class="form-label">Fecha</label>
+              <input type="date" class="form-control" id="fecha_cita" name="fecha_cita" required>
             </div>
 
-            <div class="mb-3">
-                <label for="motivoCita" class="form-label">Motivo de la Cita</label>
-                <textarea class="form-control" id="motivo_cita" name="motivo" required></textarea>
+             <!-- Campo para el id del usuario -->
+             <div class="mb-3">
+              <label for="idUser" class="form-label">Usuario</label>
+              <select class="form-select" id="idUser" name="idUser">
+                <?php
+                  require_once('../../core/controladores/UsuariosControlador.php');
+                  $usuarios = indexUsers();
+                  foreach ($usuarios as $usuario) {
+                    echo '<option value="'.$usuario['idUser'].'">'.$usuario['nombre'].' '.$usuario['apellidos'].'</option>';
+                  }
+                ?>
+              </select>
             </div>
 
-            <input type="hidden" name="method" value="crear">
+            <!-- Campo para la descripción de la cita -->
+            <div class="mb-3">
+              <label for="motivo_cita" class="form-label">Motivo</label>
+              <textarea class="form-control" id="motivo_cita" name="motivo_cita" rows="5"></textarea>
+            </div>
 
-            <button type="submit" class="btn btn-primary w-100">Registrar</button>
-        
-        </form>
+            <!-- Campo oculto para indicar la acción (crear/almacenar) -->
+            <input type="hidden" name="method" value="store">
+
+            <!-- Botón de envío -->
+            <button type="submit" class="btn btn-primary">Crear Cita</button>
+          </form>
+        </div>
+      </div>
     </div>
 
  <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->

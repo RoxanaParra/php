@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuarios</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Cargar CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -22,40 +23,56 @@
 <div class="container">
     <h2 class="text-center mt-5 mb-5">Gestión de Usuarios</h2>
     <div class="row">
-
-    <?php
-    include_once('../../core/controladores/UsuariosControlador.php');
-
-    // Obtener lista de usuarios
-    $usuarios = obtenerUsuarios();  // Función para obtener todos los usuarios
-    foreach ($usuarios as $usuario) {
-        echo "
-        <div class='col-md-6 col-lg-4 mb-4'>
-            <div class='card shadow-sm'>
-                <div class='card-body'>
-                    <h5 class='card-title text-dark mb-3'>" . htmlspecialchars($usuario['nombre']) . "</h5>
-                    <p class='card-text text-muted'>Rol: " . htmlspecialchars($usuario['rol']) . "</p>
-                    <p class='text-muted mb-4'><small>Usuario ID: " . htmlspecialchars($usuario['id']) . "</small></p>
-                    <div class='d-flex justify-content-between align-items-center'>
-                        <a href='verUsuario.php?id=" . htmlspecialchars($usuario['id']) . "' class='btn btn-outline-primary btn-sm'>Ver Detalles</a>";
-
-                        // Si el usuario es Administrador, mostrar opción para eliminar
-                        if ($usuario['rol'] == 'Administrador') {
-                            echo "<button class='btn btn-danger btn-sm' disabled>Acción no disponible</button>";
-                        } else {
-                            // Solo los administradores pueden eliminar usuarios
-                            echo "
-                            <form action='../../core/controladores/UsuariosControlador.php' method='POST' style='display:inline;'>
-                                <input type='hidden' name='method' value='delete'>
-                                <input type='hidden' name='idUsuario' value='" . htmlspecialchars($usuario['id']) . "'>
-                                <button type='submit' class='btn btn-danger btn-sm'>Eliminar Usuario</button>
-                            </form>";
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Fecha de nacimiento</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Sexo</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    include_once __DIR__. '/../../core/controladores/UsuariosControlador.php';
+                    $usuarios = indexUsers(); // Función para obtener usuarios desde el controlador
+                    foreach ($usuarios as $usuario) {
+                        echo '    
+                            <tr>
+                                <th scope="row">'.$usuario['idUser'].'</th>
+                                <td>'.$usuario['nombre'].'</td>
+                                <td>'.$usuario['apellidos'].'</td>
+                                <td>'.$usuario['fecha_de_nacimiento'].'</td>
+                                <td>'.$usuario['direccion'].'</td>
+                                <td>'.($usuario['sexo'] == 'M' ? 'Masculino' : 'Femenino').'</td>
+                                <td>'.$usuario['telefono'].'</td>
+                                <td>'.$usuario['email'].'</td>
+                                <td>
+                                    <a href="../../views/usuarios/editarUsuario.php?id='.$usuario['idUser'].'" class="btn btn-primary"><i class="fa fa-pencil icon-small"></i></a>
+                                    <form action="../../core/controlador/UsuariosControlador.php" method="POST">
+                                        <input type="hidden" name="idUser" value="'.$usuario['idUser'].'">
+                                        <input type="hidden" name="method" value="delete">
+                                        <button type="submit" class="btn btn-danger">
+                                        <i class="fa fa-trash icon-small"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>';
                         }
-                    echo "</div>
-                </div>
-            </div>
-        </div>";
-    }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12 mb-3">
+            <a href="../../views/usuarios/crearUsuario.php" class="btn btn-primary">Crear Usuario</a>
+        </div>  
+</div>
+
     ?>
 
     </div>
@@ -63,7 +80,7 @@
 
 <!-- Footer -->
 <div id="footer">
-    <?php include_once('../../footer.php') ?>
+    <?php include_once __DIR__.'/../../footer.php' ?>
 </div>
 
 <!-- Cargar JS de Bootstrap -->

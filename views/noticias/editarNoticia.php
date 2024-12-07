@@ -18,54 +18,75 @@
 
 <div class="EspacioDebajoDelNavbar"></div>
 
+<?php
+    include_once __DIR__ . '/../../core/controladores/NoticiasControlador.php';
+
+    // Validar que el parámetro 'id' esté presente en la URL
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
+    if ($id === null) {
+        die("El parámetro 'id' es requerido.");
+    }
+
+    // Llamar a las funciones necesarias
+    $Noticia = mostrarNoticia($id);
+    $usuarios = ObtenerUsuarios();
+?>
+
 <!-- Contenedor Principal -->
 <div class="container mt-5">
-    <div class="card shadow-lg">
-        <h3 class="text-center p-3">Editar Noticia</h3>
+    <div class="card shadow-lg"> 
         <div class="card-body">
             <!-- Formulario de Edición -->
-            <form method="POST" action="../../core/controladores/NoticiasControlador.php">
-                <!-- Campo Oculto para ID de la Noticia -->
-                <input type="hidden" id="idNoticia" name="idNoticia" value="<?= htmlspecialchars($noticia['idNoticia'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+        <form action="../../core/controladores/NoticiasControlador.php" method="POST" enctype="multipart/form-data">
+          <!-- Título de la noticia -->
+          <div class="mb-3">
+                <label for="titulo" class="form-label">Título</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" value="<?= htmlspecialchars($Noticia['titulo']) ?>" required>
+            </div>
 
-                <!-- Título de la Noticia -->
-                <div class="mb-3">
-                    <label for="titulo" class="form-label">Título de la Noticia:</label>
-                    <input type="text" id="titulo" name="titulo" class="form-control" 
-                           value="<?= htmlspecialchars($noticia['titulo'] ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
+            <!-- Fecha de publicación -->
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha de Publicación</label>
+                <input type="date" class="form-control" id="fecha" name="fecha" value="<?= htmlspecialchars($Noticia['fecha']) ?>" required>
+            </div>
+
+            <!-- Contenido de la noticia -->
+            <div class="mb-3">
+                <label for="texto" class="form-label">Texto</label>
+                <textarea class="form-control" id="texto" name="texto" rows="6" required><?= htmlspecialchars($Noticia['texto']) ?></textarea>
+            </div>
+
+            <!-- Imagen actual -->
+            <div class="mb-3">
+                <label for="imagen_actual" class="form-label">Imagen Actual</label>
+                <div>
+                    <img src="<?= htmlspecialchars($Noticia['imagen']) ?>" alt="Imagen de la noticia" class="img-thumbnail" style="max-height: 150px;">
                 </div>
+            </div>
 
-                <!-- Fecha de la Noticia -->
-                <div class="mb-3">
-                    <label for="fecha" class="form-label">Fecha:</label>
-                    <input type="date" id="fecha" name="fecha" class="form-control" 
-                           value="<?= htmlspecialchars($noticia['fecha'] ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
-                </div>
+            <!-- Subir nueva imagen -->
+            <div class="mb-3">
+                <label for="imagen" class="form-label">Nueva Imagen (opcional)</label>
+                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+            </div>
 
-                <!-- Contenido de la Noticia -->
-                <div class="mb-3">
-                    <label for="texto" class="form-label">Contenido:</label>
-                    <textarea id="texto" name="texto" class="form-control" rows="5" required><?= htmlspecialchars($noticia['contenido'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
-                </div>
+            <div class="mb-3">
+                <label for="idUser" class="form-label">Usuario</label>
+                <select class="form-select" id="idUser" name="idUser">
+                    <?php foreach ($usuarios as $usuario): ?>
+                        <option value="<?= $usuario['idUser'] ?>"><?= $usuario['nombre'] ?> <?= $usuario['apellidos'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            
+            <input type="hidden" name="method" value="update">
 
-                <!-- Imagen de la Noticia -->
-                <div class="mb-3">
-                    <label for="imagen" class="form-label">Imagen:</label>
-                    <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required>
-                    
-                    <?php if (!empty($noticia['imagen'])): ?>
-                        <small class="form-text">Imagen actual: <?= htmlspecialchars($noticia['imagen'], ENT_QUOTES, 'UTF-8') ?></small>
-                    <?php endif; ?>
-                </div>
-
-                <input type="hidden" name="method" value="update">
-                <input type="hidden" name="id" value="<?php isset($noticia['idNoticia']) ? $noticia['idNoticia'] : '' ?>">
-
-                <!-- Botón de Guardar Cambios -->
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </div>
-            </form>
+            <!-- Botón de envío -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <a href="../../views/noticias/noticias.php" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
         </div>
     </div>
 </div>

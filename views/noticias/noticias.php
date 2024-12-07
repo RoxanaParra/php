@@ -4,66 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noticias sobre Regalos Personalizados</title>
-    <!-- Cargar CSS de Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../public/css/estilos.css">
 </head>
 <body>
 
-<!--El siguiente div define un contenedor preparado para albergar una barra de navegación, 
-        esté div puede ser manipulado a través de php-->
-
         <div id="navbar" class="nav">
-        <?php include_once('../../navbar.php') ?>
-    </div>
+            <?php include_once('../../navbar.php') ?>
+        </div>
 
-    <div class="EspacioDebajoDelNavbar"></div>
-    
-<!-- Contenedor de noticias -->
+        <?php
+        include_once __DIR__ . '/../../core/controladores/NoticiasControlador.php';
+
+        // Obtener la lista de noticias
+        $noticiasList = index();
+
+        // Asegurarse de que es un array
+        if (!is_array($noticiasList)) {
+            $noticiasList = [];
+        }
+        ?>
+
+<div class="EspacioDebajoDelNavbar"></div>
 
 <div class="container">
-    <h2 class="text-center mt-5 mb-5">¡Últimas noticias sobre Regalos personalizados!</h2>
+    <h2 class="text-center mt-5 mb-5">Noticias</h2>
     <div class="row">
-    <?php
-    include_once('../../core/controladores/NoticiasControlador.php');
+        <div class="container my-5">
+            <?php foreach ($noticiasList as $noticias): ?>
+                <div class="col">
+                    <div class="card h-100">
+                        <?php if (!empty($noticias['imagen'])): ?>
+                            <img src="<?= htmlspecialchars($noticias['imagen']) ?>" class="card-img-top" alt="Imagen de la noticia">
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <h5 class="card-title">#<?= htmlspecialchars($noticias['idNoticia']) ?> - <?= htmlspecialchars($noticias['titulo']) ?></h5>
+                            <p class="card-text"><?= htmlspecialchars($noticias['texto']) ?></p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                                    <a href="../../views/noticias/editarNoticia.php?id=<?= htmlspecialchars($noticias['idNoticia']) ?>" class="btn btn-primary me-2">Editar</a>
+                                    <form action="../../core/controladores/NoticiasControlador.php" method="POST">
+                                        <input type="hidden" name="id" value="<?= htmlspecialchars($noticias['idNoticia']) ?>">
+                                        <input type="hidden" name="method" value="delete">
+                                        
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                            </div>
 
-    $noticias = index();
-    foreach ($noticias as $noticia) {
-        echo "
-        <div class='col-md-6 col-lg-4 mb-4'>
-            <div class='card shadow-sm'>
-                <img src='../../public/imagenes/taza1.jpg' class='card-img-top rounded-top' alt='Imagen de " . htmlspecialchars($noticia['titulo']) . "' style='height: 200px; object-fit: cover;'>
-                <div class='card-body'>
-                    <h5 class='card-title text-dark mb-3'>" . htmlspecialchars($noticia['titulo']) . "</h5>
-                    <p class='card-text text-muted'>" . htmlspecialchars(substr($noticia['texto'], 0, 80)) . "...</p>
-                    <p class='text-muted mb-4'><small>Publicado el " . htmlspecialchars($noticia['fecha']) . " | Usuario " . htmlspecialchars($noticia['idUser']) . "</small></p>
-                    <div class='d-flex justify-content-between align-items-center'>
-                        <a href='create.php' class='btn btn-outline-primary btn-sm'>Mostrar</a>
-                        <a href='update.php?id=" . htmlspecialchars($noticia['idNoticia']) . "' class='btn btn-outline-primary btn-sm'>Editar</a>
-                        <form action='../../core/controladores/NoticiasControlador.php' method='POST' style='display:inline;'>
-                            <input type='hidden' name='method' value='delete'>
-                            <input type='hidden' name='idNoticia' value='" . htmlspecialchars($noticia['idNoticia']) . "'>
-                        </form>
+                            <div class="card-footer">
+                                <small class="text-muted">Fecha: <?= htmlspecialchars($noticias['fecha']) ?></small>
+                            </div>
                     </div>
                 </div>
-            </div>
-        </div>";
-    }
-    ?>
-
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="col-md-12 mb-3">
+        <a href="../../views/noticias/crearNoticia.php" class="btn btn-primary">Crear Noticia</a>
     </div>
 </div>
 
- <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
-        
- <div id="footer">
-        <?php include_once('../../footer.php') ?>
-    </div>
+<div id="footer">
+    <?php include_once('../../footer.php') ?>
+</div>
 
-    <!-- Cargar JS de Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../../public/javascript/navbarUtil.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../public/javascript/navbarUtil.js"></script>
 </body>
 </html>

@@ -13,56 +13,94 @@
 
 <!-- Barra de Navegación -->
 <div id="navbar" class="nav">
-    <?php include_once('../../navbar.php') ?>
+    <?php include_once ('../../navbar.php') ?>
 </div>
+
+<?php
+include_once __DIR__ . '/../../core/controladores/UsuariosControlador.php';
+
+// Validar y obtener el ID de usuario desde la URL
+$parsedUrl = parse_url($_SERVER['REQUEST_URI']);
+$queryParams = isset($parsedUrl['query']) ? explode('&', $parsedUrl['query']) : [];
+$userId = null;
+
+if (!empty($queryParams)) {
+    $parts = explode('=', $queryParams[0]);
+    $userId = $parts[1] ?? null;
+}
+
+if (!$userId) {
+    echo "<p class='text-danger'>ID de usuario no válido.</p>";
+    exit;
+}
+
+// Obtener el usuario
+$user = mostrarUsuario($userId);
+
+if (!$user) {
+    echo "<p class='text-danger'>Usuario no encontrado.</p>";
+    exit;
+}
+?>
 
 <div class="EspacioDebajoDelNavbar"></div>
 
-<!-- Contenedor Principal -->
 <div class="container mt-5">
     <div class="card shadow-lg">
-        <h3 class="text-center p-3">Editar Usuario</h3>
         <div class="card-body">
-            <!-- Formulario de Edición -->
-            <form method="POST" action="../../core/controladores/UsuariosControlador.php">
-                <!-- Campo Oculto para ID del Usuario -->
-                <input type="hidden" id="idUser" name="idUser" value="<?= htmlspecialchars($usuario['idUser'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
-
-                <!-- Nombre de Usuario -->
+            <form method="POST" action="../../core/controladores/UsuariosControlador.php" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Nombre de Usuario:</label>
-                    <input type="text" id="username" name="username" class="form-control" 
-                           value="<?= htmlspecialchars($usuario['username'] ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required value="<?= $user['nombre'] ?>">
                 </div>
-
-                <!-- Correo Electrónico -->
                 <div class="mb-3">
-                    <label for="email" class="form-label">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" class="form-control" 
-                           value="<?= htmlspecialchars($usuario['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>" required>
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" required value="<?= $user['apellidos'] ?>">
                 </div>
-
-                <!-- Contraseña -->
                 <div class="mb-3">
-                    <label for="password" class="form-label">Nueva Contraseña (Opcional):</label>
-                    <input type="password" id="password" name="password" class="form-control" 
-                           placeholder="Deja vacío si no deseas cambiar la contraseña">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required value="<?= $user['email'] ?>">
                 </div>
-
-                <!-- Selección de Rol -->
                 <div class="mb-3">
-                    <label for="role" class="form-label">Rol:</label>
-                    <select id="role" name="role" class="form-select" required>
-                        <option value="admin" <?= isset($usuario['role']) && $usuario['role'] === 'admin' ? 'selected' : '' ?>>Administrador</option>
-                        <option value="user" <?= isset($usuario['role']) && $usuario['role'] === 'user' ? 'selected' : '' ?>>Usuario</option>
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required value="<?= empty($user['password']) ? '' : $user['password'] ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="nickname" class="form-label">Alias</label>
+                    <input type="text" class="form-control" id="nickname" name="usuario" required value="<?= $user['usuario'] ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required value="<?= $user['direccion'] ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" required value="<?= $user['telefono'] ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="fecha_de_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="fecha_de_nacimiento" name="fecha_de_nacimiento" required value="<?= $user['fecha_de_nacimiento'] ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="rol" class="form-label">Rol</label>
+                    <select class="form-select" id="rol" name="rol">
+                        <option value="admin" <?= $user['rol'] == 'admin' ? 'selected' : '' ?>>Administrador</option>
+                        <option value="user" <?= $user['rol'] == 'user' ? 'selected' : '' ?>>Usuario</option>
                     </select>
                 </div>
-
+                <div class="mb-3">
+                    <label for="sexo" class="form-label">Sexo</label>
+                    <select class="form-select" id="sexo" name="sexo">
+                        <option value="M" <?= $user['sexo'] == 'M' ? 'selected' : '' ?>>Masculino</option>
+                        <option value="F" <?= $user['sexo'] == 'F' ? 'selected' : '' ?>>Femenino</option>
+                    </select>
+                </div>
                 <input type="hidden" name="method" value="update">
+                <input type="hidden" name="idUser" value="<?= $userId ?>">
 
-                <!-- Botón de Guardar Cambios -->
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                    <a href="../../views/usuarios/usuarios.php" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -74,7 +112,6 @@
     <?php include_once('../../footer.php') ?>
 </div>
 
-<!-- Cargar JS de Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="../../public/javascript/navbarUtil.js"></script>

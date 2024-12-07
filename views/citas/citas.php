@@ -15,44 +15,49 @@
     <div id="navbar" class="nav">
         <?php include_once('../../navbar.php') ?>
     </div>
-
-    <div class="EspacioDebajoDelNavbar"></div>
     
-    <!-- Contenedor de citas -->
-    <div class="container">
-        <h2 class="text-center mt-5 mb-5">Lista de Citas Registradas</h2>
-        <div class="row">
+    <?php
+        include_once __DIR__ . '/../../core/controladores/CitasControlador.php';
 
-        <?php
-        include_once('../../core/controladores/CitasControlador.php');
+            // Obtener la lista de citas
+            $citasList = index();
 
-        $citas = index(); // Asegúrate de que la función 'index()' en el controlador de citas retorne todas las citas.
-        foreach ($citas as $cita) {
-            echo "
-            <div class='col-md-6 col-lg-4 mb-4'>
-                <div class='card shadow-sm'>
-                    <div class='card-body'>
-                        <h5 class='card-title text-dark mb-3'>Cliente: " . htmlspecialchars($cita['nombre']) . "</h5>
-                        <p class='card-text'><strong>Fecha:</strong> " . htmlspecialchars($cita['fecha']) . "</p>
-                        <p class='card-text'><strong>Hora:</strong> " . htmlspecialchars($cita['hora']) . "</p>
-                        <p class='card-text'><strong>Motivo:</strong> " . htmlspecialchars(substr($cita['motivo'], 0, 80)) . "...</p>
-                        <div class='d-flex justify-content-between align-items-center'>
-                            <a href='verCita.php?id=" . htmlspecialchars($cita['idCita']) . "' class='btn btn-outline-primary btn-sm'>Mostrar</a>
-                            <form action='../../core/controladores/CitasControlador.php' method='POST' style='display:inline;'>
-                                <input type='hidden' name='method' value='delete'>
-                                <input type='hidden' name='idCita' value='" . htmlspecialchars($cita['idCita']) . "'>
-                                <button type='submit' class='btn btn-danger btn-sm'>Eliminar</button>
+            // Asegurarse de que es un array
+            if (!is_array($citasList)) {
+                $citasList = [];
+            }
+        ?>
+  
+
+        <div class="EspacioDebajoDelNavbar"></div>
+
+        <div class="container">
+        <h2 class="text-center mt-5 mb-5">Citas</h2>
+        <div class="grid-container">
+            <?php foreach ($citasList as $cita): ?>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">#<?= htmlspecialchars($cita['idCita']) ?> - Usuario: <?= htmlspecialchars($cita['nombre']) ?> <?= htmlspecialchars($cita['apellidos']) ?></h5>
+                        <p class="card-text"><strong>Motivo:</strong> <?= htmlspecialchars($cita['motivo_cita']) ?></p>
+                        <div class="d-flex justify-content-between">
+                            <a href="../../views/citas/editarCita.php?id=<?= htmlspecialchars($cita['idCita']) ?>" class="btn btn-primary">Editar</a>
+                            <form action="../../core/controladores/CitasControlador.php" method="POST">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($cita['idCita']) ?>">
+                                <input type="hidden" name="method" value="delete">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Fecha: <?= htmlspecialchars($cita['fecha_cita']) ?></small>
+                    </div>
                 </div>
-            </div>";
-        }
-        ?>
-
+            <?php endforeach; ?>
+        </div>
+        <div class="text-center mt-4">
+            <a href="../../views/citas/crearCita.php" class="btn btn-primary">Crear Cita</a>
         </div>
     </div>
-
     <!-- Footer -->
     <div id="footer">
         <?php include_once('../../footer.php') ?>

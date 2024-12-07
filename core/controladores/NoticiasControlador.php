@@ -2,18 +2,20 @@
 
     require_once __DIR__ . '/../conexion/conexion.php';
 
-
     function handleRequest() {
         if (isset($_POST ['method'])) {
             switch ($_POST ['method']) {
-                case 'crear':
-                    crear();
+                case 'store':
+                    crearNoticia();
                     break;
-                case 'delete':
-                    delete();
+                case 'eliminar':
+                    eliminarNoticia();
                     break;
-                case 'update':
-                    editar();
+                case 'mostrar':
+                    mostrarNoticia();
+                    break;
+                case 'editar':
+                    editarNoticia();
                     break;
             }
         }
@@ -23,30 +25,30 @@
     function index() {
         $pdo = crearConexion();
     
-        $sql = "SELECT * FROM noticias";
+        $sql = "SELECT * FROM noticias JOIN users_data ON noticias.idUser = users_data.idUser ORDER BY noticias.idNoticia DESC";
     
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
     
-        $noticias = $stmt->fetchAll();
+        $Noticia = $stmt->fetchAll();
     
-        if (empty($noticias)) {
+        if (empty($Noticia)) {
             echo "No se encontraron noticias en la base de datos.";
             exit;
         }
     
-        return $noticias;
+        return $Noticia;
     }
 
     //Crea noticias de la base de datos
-    function crear(): void {
+    function crearNoticia(): void {
         $pdo = crearConexion(); 
 
         $titulo = $_POST ['titulo'];
-        $imagen = $_FILES['imagen']['tmp_name'];
+        $imagen = $_POST['imagen'];
         $texto = $_POST ['texto'];
         $fecha = date('Y-m-d');
-        $idUser = 4;
+        $idUser = $_POST['idUser'];
 
         $sql = "INSERT INTO noticias (titulo, imagen, texto, fecha, idUser)
                 VALUES (:titulo, :imagen, :texto, :fecha, :idUser)";
@@ -61,7 +63,7 @@
 
         if ($stmt->execute()) {
 
-            echo 'Noticia creada correctamente';
+            header('Location: ../../views/noticias/noticias.php');
             exit();
         } else {
             header('Location: ../../views/noticias/crearNoticia.php');
@@ -71,7 +73,7 @@
 
 
     //muestra una noticia en la base de datos
-    function mostrar(int $id) {
+    function mostrarNoticia(int $id) {
         $pdo = crearConexion();
 
         $sql = "SELECT * FROM noticias WHERE idNoticia = :idNoticia";
@@ -87,7 +89,7 @@
     }
 
         //edita una noticia en la base de datos
-    function editar(): void {
+    function editarNoticia(): void {
             $pdo = crearConexion();
 
             $idNoticia = $_POST['id'];
@@ -95,8 +97,15 @@
             $fecha = $_POST['fecha'];
             $texto = $_POST['texto'];
             $imagen = $_POST['imagen'];
+            $idUser = $_POST['idUser'];
 
-            $sql = "UPDATE noticias SET titulo = :titulo, fecha = :fecha, texto = :texto, imagen = :imagen WHERE idNoticia = :idNoticia";
+            $sql = "UPDATE noticias SET 
+            titulo = :titulo, 
+            fecha = :fecha, 
+            texto = :texto, 
+            imagen = :imagen,
+            idUser = idUser
+            WHERE idNoticia = :idNoticia";
 
             $stmt = $pdo->prepare($sql);
 
@@ -105,6 +114,7 @@
             $stmt->bindParam(':texto', $texto);
             $stmt->bindParam(':imagen', $imagen);
             $stmt->bindParam(':idNoticia', $idNoticia);
+            $stmt->bindParam(':idUser', $idUser);
 
             if ($stmt->execute()) {
                     header('Location: ../../views/noticias/noticias.php');
@@ -116,14 +126,16 @@
     }
 
     //elimina una noticia de la base de datos
-    function eliminar(int $id) {
+    function eliminarNoticia(int $id) {
         $pdo = crearConexion();
 
-        $sql = "DELETE FROM noticias WHERE id = :id";
+        $id = $_POST ['id'];
+
+        $sql = "DELETE FROM noticias WHERE idNoticia = :idNoticia";
 
         $stmt = $pdo->prepare($sql);
 
-        $stmt->bindParam('id', $id);
+        $stmt->bindParam(':idNoticia', $id);
 
         if ($stmt->execute()) {
 
@@ -134,6 +146,18 @@
             exit();
         }
 
+    }
+
+    function ObtenerUsuarios() {
+        $pdo = crearConexion();
+
+        $sql = "SELECT * FROM users_data";
+
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 
     handleRequest()

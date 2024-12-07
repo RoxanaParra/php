@@ -18,51 +18,58 @@
         <?php include_once('../../navbar.php') ?>
     </div>
 
-    <div class="EspacioDebajoDelNavbar"></div>
+    <?php 
+    include_once '../../core/controladores/UsuariosControlador.php'
+    ?>
 
-    <div class="container mt-5">
-        <div class="card shadow-lg">
-                <h3 class="crearNoticia">Crear Nueva Noticia</h3>
-            <div class="card-body">
-                <form method="POST" action="../../core/controladores/NoticiasControlador.php" enctype="multipart/form-data">
-                    <!-- Campo Título -->
-                    <div class="mb-3">
-                        <label for="titulo" class="form-label">Título:</label>
-                        <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Título de la noticia" required>
-                    </div>
+    <div class="EspacioDebajoDelNavbarNoticia"></div>
 
-                    <!-- Campo Fecha -->
-                    <div class="mb-3">
-                        <label for="fecha" class="form-label">Fecha:</label>
-                        <input type="date" id="fecha" name="fecha" class="form-control" required>
-                    </div>
+    <div class="mb-5">
+        <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="card" style="width: 30rem;">
+                <div class="card-body">    
+                    <form action="../../core/controladores/NoticiasControlador.php" method="POST" class="row g-3">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="titulo" name="titulo" required>
+                        </div>
 
-                    <!-- Campo Texto -->
-                    <div class="mb-3">
-                        <label for="texto" class="form-label">Texto:</label>
-                        <textarea id="texto" name="texto" class="form-control" rows="5" placeholder="Contenido de la noticia" required></textarea>
-                    </div>
+                        <div class="mb-3">
+                            <label for="texto" class="form-label">Texto</label>
+                            <textarea class="form-control" id="texto" name="texto"></textarea>
+                        </div>
 
-                    <!-- Campo Imagen -->
-                    <div class="mb-3">
-                        <label for="imagen" class="form-label">Imagen:</label>
-                        <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required>
-                    </div>
+                        <div class="mb-3">
+                            <label for="imagen" class="form-label">Imagen</label>
+                            <input type="file" class="form-control" id="imagen" name="imagen">
+                        </div>
 
-                    <input type="hidden" name="method" value="store">
+                        <div class="mb-3">
+                            <label for="idUser" class="form-label">Usuario</label>
+                            <select class="form-select" id="idUser" name="idUser">
+                                <?php foreach ($usuarios as $usuario): ?>
+                                    <option value="<?= htmlspecialchars($usuario['idUser']) ?>">
+                                        <?= htmlspecialchars($usuario['nombre']) ?> <?= htmlspecialchars($usuario['apellidos']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-                    <br>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" required>
+                        </div>
 
-                    <!-- Botón Submit -->
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Crear Noticia</button>
-                    </div>
-                </form>
+                        <div class="col-12 text-center">
+                            <input type="hidden" name="method" value="store">
+                            <button type="submit" class="btn btn-primary">Crear Noticia</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-</div>
-
-
+    </div>
+              
      <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
         
  <div id="footer">

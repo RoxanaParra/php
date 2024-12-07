@@ -151,6 +151,18 @@
         background-color: #a23e93;
     }
 
+    .btn-danger {
+        background-color: #e74c3c;
+    }
+    
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+    
+    .btn-primary:hover {
+        background-color: #4b103a;
+    }
+
     .accordion-button {
         background-color:  #b569aa;
         color: white;
@@ -371,6 +383,10 @@
         margin-top: 120px;
     }
 
+    .EspacioDebajoDelNavbarNoticia { 
+        margin-top: 160px;
+    }
+
     .TituloAcceso {
         text-align: center;
     }
@@ -387,5 +403,56 @@
     letter-spacing: 2px; /* Espaciado entre letras */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave del texto */
    }
+
+
+.card-header {
+    background-color: rgb(222, 146, 208);
+    color: white;
+    padding: 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-footer {
+    background-color: #f9f9f9;
+    border-top: none;
+    font-size: 0.9rem;
+}
+
+h2.text-center {
+    font-family: 'Times New Roman', serif;
+    font-size: 2.5rem;
+    color: #c353b4;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ajusta automáticamente el número de columnas */
+    gap: 20px; /* Espacio entre las tarjetas */
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #a23e93;
+    box-shadow: 0 0 5px rgba(162, 62, 147, 0.5);
+}
+
+
+/* Campos del formulario */
+.form-label {
+    font-weight: bold;
+    color: #c353b4;
+}
+
+.form-control,
+.form-select {
+    border-radius: 5px;
+    border: 1px solid #c353b4;
+}
+
+.icon-small {
+    font-size: 0.8rem; /* Ajusta el tamaño según sea necesario */
+}
+
    
 

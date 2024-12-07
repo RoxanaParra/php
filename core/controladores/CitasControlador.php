@@ -1,81 +1,138 @@
 <?php
 
 require_once __DIR__ . '/../conexion/conexion.php';
-
-function arranque() {
-    switch ($_POST['method']) {
-        case 'crear':
-            crear();
-            break;
-    }
-}
-
-function listar() {
-    //muestra todos los usuarios de la base de datos
-}
-
-function mostrar(int $id) {
-    //muestra un usuario en la base de datos
-}
-
-function crear() {
-    try {
-        //paso 1: Invocar la conexion (en este caso se invoca de forma global)
-        $conexion = crearConexion();
-
-        //2 Preparar la consulta
-        $sql = "INSERT INTO citas (idUser, fecha_cita, motivo_cita) VALUES (:usuario, :fecha, :motivo)";
-
-        //3 Preparar el statement
-        $statement = $conexion->prepare($sql);
-
-        //4 Vincular los parametros
-        $usuario = (int) $_POST['usuario'];
-        $fecha = $_POST['fecha'];
-        $motivo = $_POST['motivo'];
-
-        $statement->bindParam(':usuario', $usuario);
-        $statement->bindParam(':fecha', $fecha);
-        $statement->bindParam(':motivo', $motivo);
-
-        $statement->execute();
-
-        if ($statement->execute()) {
-            header('Location: ../../views/citas/crearCita.php');
+function handleRequest() {
+    if (isset($_POST['method'])) {
+        switch ($_POST['method']) {
+            case 'store':
+                crearCita();
+                break;
+            case 'delete':
+                eliminarCita();
+                break;
+            case 'mostrar':
+                mostrarCita();
+                break;
+            case 'editar':
+                editarCita();
+                break;
         }
-    }catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
     }
 }
 
-function editar(int $id) {
-    try {
-        //paso 1: Invocar la conexion (en este caso se invoca de forma global)
-        $conexion = crearConexion();
+function index() {
+    $pdo = crearConexion();
 
-        //2 Preparar la consulta
-        $sql = "UPDATE citas SET idUser = :usuario, fecha_cita = :fecha, motivo_cita = :motivo WHERE idCita = :id";
+    $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser";
 
-        //3 Preparar el statement
-        $statement = $conexion->prepare($sql);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 
-        //4 Vincular los parametros
-        $usuario = (int) $_POST['usuario'];
-        $fecha = $_POST['fecha'];
-        $motivo = $_POST['motivo'];
+    $citas = $stmt->fetchAll();
 
-        $statement->bindParam(':usuario', $usuario);
-        $statement->bindParam(':fecha', $fecha);
-        $statement->bindParam(':motivo', $motivo);
+    if (empty($citas)) {
+        echo "No se encontraron citas en la base de datos.";
+        exit;
+    }
 
-        $statement->execute();
-    }catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    return $citas;
+}
+
+function crearCita(): void {
+    $pdo = crearConexion(); 
+
+    $motivo_cita = $_POST['motivo_cita'];
+    $fecha_cita = $_POST['fecha_cita'];
+    $idUser = $_POST['idUser'];
+
+    $sql = "INSERT INTO citas (motivo_cita, fecha_cita, idUser)
+            VALUES (:motivo_cita, :fecha_cita, :idUser)";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':motivo_cita', $motivo_cita);
+    $stmt->bindParam(':fecha_cita', $fecha_cita);
+    $stmt->bindParam(':idUser', $idUser);
+
+    if ($stmt->execute()) {
+        header('Location: ../../views/citas/citas.php');
+        exit();
+    } else {
+        header('Location: ../../views/citas/crearCita.php');
+        exit();
     }
 }
 
-function eliminar(int $id) {
-    //elimina un usuario de la base de datos
+function mostrarCita(int $id) {
+
+        $pdo = crearConexion();
+    
+        $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser WHERE citas.idCita = :idCita";
+    
+        $stmt = $pdo->prepare($sql);
+    
+        $stmt->bindParam(':idCita', $id);
+    
+        $stmt->execute();
+        
+        return $stmt->fetch();
 }
 
-arranque();
+
+function editarCita(): void {
+    $pdo = crearConexion();
+
+    $idCita = $_POST['id'];
+    $motivo_cita = $_POST['motivo_cita'];
+    $fecha_cita = $_POST['fecha_cita'];
+    $idUser = $_POST['idUser'];
+
+    $sql = "UPDATE citas SET 
+            motivo_cita = :motivo_ cita, 
+            fecha_cita = :fecha_cita,
+            idUser = :idUser
+            WHERE idCita = :idCita";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':motivo_cita', $motivo_cita);
+    $stmt->bindParam(':fecha_cita', $fecha_cita);
+    $stmt->bindParam(':idUser', $idUser);
+    $stmt->bindParam(':idCita', $idCita);
+
+    if ($stmt->execute()) {
+        header('Location: ../../views/citas/citas.php');
+        exit();
+    } else {
+        header('Location: ../../views/citas/editarCita.php');
+        exit();
+    }
+}
+    function eliminarCita(int $id) {
+        $pdo = crearConexion();
+    
+        $sql = "DELETE FROM citas WHERE idCita = :idCita";
+    
+        $stmt = $pdo->prepare($sql);
+    
+        $stmt->bindParam(':idCita', $idCita);
+    
+        if ($stmt->execute()) {
+            header('Location: ../../views/citas/citas.php');
+            exit();
+        } else {
+            header('Location: ../../views/citas/citas.php');
+            exit();
+        }
+    }
+
+    function ObtenerUsuarios() {
+        $pdo = crearConexion();
+    
+        $sql = "SELECT * FROM users_data";
+    
+        return $pdo->query($sql)->fetchAll();
+    }
+
+    handleRequest();
+
