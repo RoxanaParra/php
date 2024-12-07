@@ -40,10 +40,6 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <div class="mb-3">
-                    <label for="nickname" class="form-label">Alias</label>
-                    <input type="text" class="form-control" id="nickname" name="usuario" required>
-                </div>
-                <div class="mb-3">
                     <label for="direccion" class="form-label">Dirección</label>
                     <input type="text" class="form-control" id="direccion" name="direccion" required>
                 </div>

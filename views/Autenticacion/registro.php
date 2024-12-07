@@ -29,64 +29,55 @@
                 </div>
                   <div class="card-body">
                     <div class="container">
-                    <form method="post" action="../../core/auth/registro.php"> 
-                        <!-- Nombre -->
-                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" required>
-                        </div>
-                        <!-- Apellidos -->
-                         <div class="mb-3">
-                            <label for="apellidos" class="form-label">Apellidos</label>
-                             <input type="text" class="form-control" id="apellidos" name="apellidos" required>
-                            </div>
-                            <!-- Nombre de Usuario -->
-                         <div class="mb-3">
-                            <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
-                             <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" required>
-                            </div>
-                            <!-- Email -->
-                             <div class="mb-3">
-                                <label for="email" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <!-- Teléfono -->
-                             <div class="mb-3">
-                                <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                            </div>
-                            <!-- Fecha de Nacimiento -->
-                             <div class="mb-3">
-                                <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
-                            </div>
-                            <!-- Dirección -->
-                             <div class="mb-3">
-                                <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" required>
-                            </div>
-                            <!-- Sexo -->
-                             <div class="mb-3">
-                                <label class="form-label">Sexo</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="sexo" id="sexoMasculino" value="M" required>
-                                     <label class="form-check-label" for="sexoMasculino">Masculino</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sexo" id="sexoFemenino" value="F" required>
-                                        <label class="form-check-label" for="sexoFemenino">Femenino</label>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                </div>
-                                <!-- Botón de Registro -->
-                                 <button type="submit" class="btn btn-primary w-100">Registrar</button>
-                                 <div class="card-body" id="Centrar">
-                                    <a href="#" class="card-link custom-link">Registrarse como Admin</a>
-                                </div>
-                            </form>
+                    <form method="POST" action="../../core/controladores/UsuariosControlador.php" enctype="multipart/form-data" class="row g-3">
+                <!-- Nombre de Usuario -->
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required>
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fecha_de_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="fecha_de_nacimiento" name="fecha_de_nacimiento" required>
+                </div>
+                <div class="mb-3">
+                    <label for="rol" class="form-label">Rol</label>
+                    <select class="form-select" id="rol" name="rol">
+                        <option value="admin">Administrador</option>
+                        <option value="user">Usuario</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="sexo" class="form-label">Sexo</label>
+                    <select class="form-select" id="sexo" name="sexo">
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                </div>
+                <div class="col-12 text-center">
+                    <input type="hidden" name="method" value="store">
+                    <button type="submit" class="btn btn-primary w-100">Crear Usuario</button>
+                </div>
+            </form>
                     </div>
                   </div>
             </div>
