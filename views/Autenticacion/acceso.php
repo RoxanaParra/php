@@ -39,20 +39,22 @@
                         </ul>
                     </div>
                     <p class="card-text text-center">Ingrese sus credenciales para acceder a su cuenta.</p>
-                    <form>
+
+                    <form method="POST" action="../../core/controladores/UsuariosControlador.php">
                         <div class="mb-3">
-                            <label for="emailInput" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" required>
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="passwordInput" class="form-label">Contraseña</label>
-                            <input type="password" id="passwordInput" class="form-control" required>
-                            <div id="passwordHelpBlock" class="form-text">
-                                Su contraseña debe tener entre 8 y 20 caracteres, contener letras y números, y no debe contener espacios, caracteres especiales ni emojis.
-                            </div>
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
                         </div>
+                        
+                        <input type="hidden" name="method" value="login">
+
                         <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
                     </form>
+
                 </div>
             </div>
                     

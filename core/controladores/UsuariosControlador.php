@@ -14,6 +14,15 @@ function handleRequest() {
             case 'update':
                 editarUsuario($_POST['idUser']);
                 break;
+            case 'register':
+                registerUser();
+                break;
+            case 'login':
+                loginUser();
+                break;
+            case 'logout':
+                logoutUser();
+                break;
         }
     }
 }
@@ -57,7 +66,7 @@ function ObtenerUltimoIdUser() {
     return $stmt->fetch();
 }
 
-function storeUser() {
+function saveUser() {
     $pdo = crearConexion();
 
     $name = $_POST['nombre'];
@@ -98,17 +107,69 @@ function storeUser() {
         $stmt->bindParam(':rol', $role);
         $stmt->bindParam(':password', $password);
 
-        if ($stmt->execute()) {
-            header('Location: ../../views/usuarios/usuarios.php');
-            exit();
-        } else {
-            header('Location: ../../views/usuarios/usuarios.php');
-            exit();
-        }
+        return $stmt->execute();
+    }else{
+        return false;
+    }
+}
+
+function storeUser() {
+    if (saveUser()) {
+        header('Location: ../../views/usuarios/usuarios.php');
+        exit();
     } else {
         header('Location: ../../views/usuarios/usuarios.php');
         exit();
     }
+}
+
+function registerUser() {
+    if (saveUser()) {
+        header('Location: ../../views/Autenticacion/acceso.php');
+        exit();
+    } else {
+        header('Location: ../../views/Autenticacion/registro.php');
+        exit();
+    }
+}
+
+function loginUser() {
+    $pdo = crearConexion();
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM users_login WHERE usuario = :usuario";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':usuario', $username);
+
+    $stmt->execute();
+
+    $user = $stmt->fetch();
+
+    if ($user && password_verify($password, $user['password'])) {
+        session_start();
+        
+        $_SESSION['user'] = $user;
+        
+        header('Location: ../../index.php');
+        exit();
+    } else {
+        header('Location: ../../views/Autenticacion/acceso.php');
+        exit();
+    }
+}
+
+function logoutUser() {
+    session_start();
+    
+    session_destroy();
+
+    header('Location: ../../views/Autenticacion/acceso.php');
+
+    exit();
 }
 
 function editarUsuario(int $id) {
@@ -142,9 +203,7 @@ function editarUsuario(int $id) {
                 users_login.usuario = :usuario,
                 users_login.rol = :rol" .
                 ($password ? ", users_login.password = :password" : "") .
-           " WHERE users_data.idUser = :id";
-
-    
+           "WHERE users_data.idUser = :id";
 
     $stmt = $pdo->prepare($sql);
 
