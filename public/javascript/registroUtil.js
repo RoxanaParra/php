@@ -17,6 +17,8 @@ function validarFormulario()
     const regexApellidos = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{1,40}$/; 
     const regexTelefono = /^[0-9]{9}$/; // Para la comprobación de números 
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Comprobación del campo de Email
+    const regexFechaDeNacimiento = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/; // Comprobación del campo de Fecha de Nacimiento
+    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/; // Comprobación del campo de Password
 
     function borrarErrores () {
     //Borrar mensajes de error previos 

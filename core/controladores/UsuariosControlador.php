@@ -151,8 +151,16 @@ function loginUser() {
 
     if ($user && password_verify($password, $user['password'])) {
         session_start();
-        
-        $_SESSION['user'] = $user;
+
+        $sql = "SELECT * FROM users_data JOIN users_login ON users_data.idUser = users_login.idUser WHERE users_login.idUser = :id";
+
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindParam(':id', $user['idUser']);
+
+        $stmt->execute();
+
+        $_SESSION['user'] = $stmt->fetch();
         
         header('Location: ../../index.php');
         exit();

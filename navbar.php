@@ -23,23 +23,9 @@ function ObtenerRutas() {
         $prefix . 'views/noticias/noticias.php',           // Página principal de Noticias
         $prefix . 'views/citas/citas.php',                 // Página principal de Citas
         $prefix . 'views/usuarios/usuarios.php',           // Página principal de Usuarios
-        $prefix . 'views/autenticacion/acceso.php',         // Página principal de Acceso
-
-        // Rutas adicionales para los archivos dentro de cada sección
-        // Noticias (3 archivos adicionales)
-        $prefix . 'views/noticias/crearNoticia.php',
-        $prefix . 'views/noticias/mostrarNoticia.php',
-        $prefix . 'views/noticias/editarNoticia.php',
-
-        // Citas (3 archivos adicionales)
-        $prefix . 'views/citas/crearCita.php',
-        $prefix . 'views/citas/mostrarCita.php',
-        $prefix . 'views/citas/editarCita.php',
-
-        // Usuarios (3 archivos adicionales)
-        $prefix . 'views/usuarios/crearUsuario.php',
-        $prefix . 'views/usuarios/mostrarUsuario.php',
-        $prefix . 'views/usuarios/editarUsuario.php'
+        $prefix . 'views/autenticacion/acceso.php',        // Página principal de Acceso
+        $prefix . 'views/usuarios/perfil.php',            // Página de perfil de usuario
+        $prefix . 'core/controladores/UsuariosControlador.php'
     ];
 
     return $definedRoutes;
@@ -61,68 +47,75 @@ function ObtenerLogo() {
     return $prefix . 'public/imagenes/logo.png';
 }
 
-function renderNavbar() { 
-    session_start();
+?>
 
-    $routes = ObtenerRutas();
-    $logo = ObtenerLogo();
+<?php
 
-    return "
-    <nav class='navbar navbar-expand-lg bg-light navbar-fixed'>
-        <div class='container-fluid'>
-            <a class='navbar-brand' href='#'>
-                <img src='$logo' alt='Logo' width='100' height='100'>
+session_start();
+
+$routes = ObtenerRutas();
+$logo = ObtenerLogo();
+
+?>
+    <nav class="navbar navbar-expand-lg bg-light navbar-fixed">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="<?php echo $logo; ?>" alt="Logo" width="100" height="100">
             </a>
-            <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
-                <span class='navbar-toggler-icon'></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-                <ul class='navbar-nav ms-auto mb-2 mb-lg-0'> <!-- Alineación derecha -->
-                    <li class='nav-item'>
-                        <a class='nav-link' id='nav-inicio' href='$routes[0]'>Inicio</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <!-- Alineación derecha -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-inicio" href="<?php echo $routes[0]; ?>">Inicio</a>
                     </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' id='nav-galeria' href='$routes[1]'>Galería</a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-galeria" href="<?php echo $routes[1]; ?>">Galería</a>
                     </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' id='nav-presupuesto' href='$routes[2]'>Presupuesto</a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-presupuesto" href="<?php echo $routes[2]; ?>">Presupuesto</a>
                     </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' id='nav-contacto' href='$routes[3]'>Contacto</a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-contacto" href="<?php echo $routes[3]; ?>">Contacto</a>
                     </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' id='nav-noticias' href='$routes[4]'>Noticias</a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-noticias" href="<?php echo $routes[4]; ?>">Noticias</a>
                     </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' id='nav-citas' href='$routes[5]'>Citas</a>
+                    <?php if (isset($_SESSION['user'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-citas" href="<?php echo $routes[5]; ?>">Citas</a>
                     </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' id='nav-usuarios' href='$routes[6]'>Usuarios</a>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['user']) && $_SESSION['user']['rol'] === 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-usuarios" href="<?php echo $routes[6]; ?>">Usuarios</a>
                     </li>
+                    <?php endif; ?>
                 </ul>
-                <span class='navbar-text'>
-                    " . (!isset($_SESSION['user']) ? "<a class='btn btn-primary' id='login-button' href='" . $routes[7] . 
-                    "'>Acceso</a>" : '<li class="nav-item dropdown">
+                <span class="navbar-text">
+
+                    <?php if (!isset($_SESSION['user'])): ?>
+                        <a class="btn btn-primary" id="login-button" href="<?php echo $routes[7]; ?>">Acceso</a>
+                    <?php else: ?>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
+                                Opciones
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">'.$_SESSION['user']['usuario'].'</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#"><?php echo ucfirst($_SESSION['user']['usuario']); ?></a></li>
+                                <li><a class="dropdown-item" href="<?php echo $routes[8]; ?>">Perfil</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <form action="core/controladores/UsuariosControlador.php" method="POST">
+                                <form action="<?php echo $routes[9]; ?>" method="POST">
                                     <li>
-                                        <input type="hidden" name="action" value="logout">
+                                        <input type="hidden" name="method" value="logout">
                                         <button class="dropdown-item" type="submit">Logout</button>
                                     </li>
                                 </form>
                             </ul>
-                        </li>') . "
-                    </span>
+                        </li>
+                    <?php endif; ?>
                 </span>
             </div>
         </div>
-    </nav>";
-}
-
-echo renderNavbar();
+    </nav>

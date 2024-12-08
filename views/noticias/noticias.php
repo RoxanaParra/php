@@ -14,15 +14,17 @@
         </div>
 
         <?php
-        include_once __DIR__ . '/../../core/controladores/NoticiasControlador.php';
+            include_once __DIR__ . '/../../core/controladores/NoticiasControlador.php';
 
-        // Obtener la lista de noticias
-        $noticiasList = index();
+            session_start();
 
-        // Asegurarse de que es un array
-        if (!is_array($noticiasList)) {
-            $noticiasList = [];
-        }
+            // Obtener la lista de noticias
+            $noticiasList = index();
+
+            // Asegurarse de que es un array
+            if (!is_array($noticiasList)) {
+                $noticiasList = [];
+            }
         ?>
 
 <div class="EspacioDebajoDelNavbar"></div>
@@ -41,7 +43,8 @@
                             <h5 class="card-title">#<?= htmlspecialchars($noticias['idNoticia']) ?> - <?= htmlspecialchars($noticias['titulo']) ?></h5>
                             <p class="card-text"><?= htmlspecialchars($noticias['texto']) ?></p>
                         </div>
-                        <div class="d-flex justify-content-end">
+                        <?php if (isset($_SESSION['user']) && $_SESSION['user']['rol'] === 'admin'): ?>
+                            <div class="d-flex justify-content-end">
                                     <a href="../../views/noticias/editarNoticia.php?id=<?= htmlspecialchars($noticias['idNoticia']) ?>" class="btn btn-primary me-2">Editar</a>
                                     <form action="../../core/controladores/NoticiasControlador.php" method="POST">
                                         <input type="hidden" name="id" value="<?= htmlspecialchars($noticias['idNoticia']) ?>">
@@ -50,7 +53,7 @@
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
                                     </form>
                             </div>
-
+                        <?php endif; ?>
                             <div class="card-footer">
                                 <small class="text-muted">Fecha: <?= htmlspecialchars($noticias['fecha']) ?></small>
                             </div>
@@ -60,7 +63,9 @@
         </div>
     </div>
     <div class="col-md-12 mb-3">
-        <a href="../../views/noticias/crearNoticia.php" class="btn btn-primary">Crear Noticia</a>
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['rol'] === 'admin'): ?>
+            <a href="../../views/noticias/crearNoticia.php" class="btn btn-primary">Crear Noticia</a>
+        <?php endif; ?>
     </div>
 </div>
 

@@ -39,14 +39,16 @@
                     <div class="card-body">
                         <h5 class="card-title">#<?= htmlspecialchars($cita['idCita']) ?> - Usuario: <?= htmlspecialchars($cita['nombre']) ?> <?= htmlspecialchars($cita['apellidos']) ?></h5>
                         <p class="card-text"><strong>Motivo:</strong> <?= htmlspecialchars($cita['motivo_cita']) ?></p>
+                        
                         <div class="d-flex justify-content-between">
                             <a href="../../views/citas/editarCita.php?id=<?= htmlspecialchars($cita['idCita']) ?>" class="btn btn-primary">Editar</a>
-                            <form action="../../core/controladores/CitasControlador.php" method="POST">
-                                <input type="hidden" name="id" value="<?= htmlspecialchars($cita['idCita']) ?>">
-                                <input type="hidden" name="method" value="delete">
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
+                                <form action="../../core/controladores/CitasControlador.php" method="POST">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($cita['idCita']) ?>">
+                                    <input type="hidden" name="method" value="delete">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
                         </div>
+                       
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">Fecha: <?= htmlspecialchars($cita['fecha_cita']) ?></small>
@@ -54,9 +56,13 @@
                 </div>
             <?php endforeach; ?>
         </div>
+
+       
         <div class="text-center mt-4">
             <a href="../../views/citas/crearCita.php" class="btn btn-primary">Crear Cita</a>
         </div>
+        
+
     </div>
     <!-- Footer -->
     <div id="footer">

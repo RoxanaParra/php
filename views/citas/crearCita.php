@@ -14,8 +14,15 @@
 <!--El siguiente div define un contenedor preparado para albergar una barra de navegación, 
         esté div puede ser manipulado a través de php-->
 
-        <div id="navbar" class="nav">
-        <?php include_once('../../navbar.php') ?>
+      <div id="navbar" class="nav">
+        <?php 
+            
+            include_once('../../navbar.php');
+
+            session_start();
+
+            $activeUser = $_SESSION['user'];
+        ?>
     </div>
 
     <div class="EspacioDebajoDelNavbar"></div>
@@ -41,13 +48,7 @@
              <div class="mb-3">
               <label for="idUser" class="form-label">Usuario</label>
               <select class="form-select" id="idUser" name="idUser">
-                <?php
-                  require_once('../../core/controladores/UsuariosControlador.php');
-                  $usuarios = indexUsers();
-                  foreach ($usuarios as $usuario) {
-                    echo '<option value="'.$usuario['idUser'].'">'.$usuario['nombre'].' '.$usuario['apellidos'].'</option>';
-                  }
-                ?>
+                  <option value="<?= $activeUser['idUser'] ?>"><?= $activeUser['nombre'] ?> <?= $activeUser['apellidos'] ?></option>
               </select>
             </div>
 
