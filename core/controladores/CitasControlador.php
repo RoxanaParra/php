@@ -23,9 +23,21 @@ function handleRequest() {
 function index() {
     $pdo = crearConexion();
 
-    $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser";
+    $idUser = $_SESSION['user']['idUser'];
+
+    //TODO: HACER QUE EL USUARIO NO PUEDA VER LAS CITAS DE OTROS USUARIOS
+    //Si el usuario es admin, puede ver todas las citas
+    // Si el usuario es user solo pueder ver su cita (ASI ES COMO SE LOS DEJE FUNCIONANDO)
+
+    $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser WHERE users_data.idUser = :idUser";
+
+    //SI ES ADMIN USAR ESTE SQL
+    // $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser";
 
     $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':idUser', $idUser);
+
     $stmt->execute();
 
     $citas = $stmt->fetchAll();

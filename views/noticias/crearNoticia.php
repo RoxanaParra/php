@@ -14,7 +14,7 @@
 <!--El siguiente div define un contenedor preparado para albergar una barra de navegación, 
         esté div puede ser manipulado a través de php-->
 
-        <div id="navbar" class="nav">
+    <div id="navbar" class="nav">
         <?php include_once('../../navbar.php') ?>
     </div>
 
@@ -25,6 +25,14 @@
     ?>
 
     <div class="EspacioDebajoDelNavbarNoticia"></div>
+
+    <?php
+
+        if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'admin') {
+            include_once '../../404.php';
+            exit();
+        }
+    ?>
 
     <div class="mb-5">
         <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">

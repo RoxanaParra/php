@@ -3,6 +3,13 @@
     require_once __DIR__ . '/../conexion/conexion.php';
 
     function handleRequest() {
+        $usuarioActivo = $_SESSION['user'];
+
+        if (! isset($usuarioActivo) || $usuarioActivo['rol'] !== 'admin') {
+            header('Location: ../../index.php');
+            exit();
+        }
+
         if (isset($_POST ['method'])) {
             switch ($_POST ['method']) {
                 case 'store':
