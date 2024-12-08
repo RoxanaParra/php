@@ -34,14 +34,23 @@
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    <span id="errorNombre" class="error"></span>
                 </div>
                 <div class="mb-3">
                     <label for="apellidos" class="form-label">Apellidos</label>
                     <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                    <span id="errorApellidos" class="error"></span>
                 </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label"> Alias </label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                    <span id="errorApellidos" class="error"></span>
+                </div>
+                
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required>
+                    <span id="errorEmail" class="error"></span>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>
@@ -50,14 +59,17 @@
                 <div class="mb-3">
                     <label for="direccion" class="form-label">Dirección</label>
                     <input type="text" class="form-control" id="direccion" name="direccion" required>
+                    <span id="errorDireccion" class="error"></span>
                 </div>
                 <div class="mb-3">
                     <label for="telefono" class="form-label">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" name="telefono" required>
+                    <span id="errorTelefono" class="error"></span>
                 </div>
                 <div class="mb-3">
                     <label for="fecha_de_nacimiento" class="form-label">Fecha de Nacimiento</label>
                     <input type="date" class="form-control" id="fecha_de_nacimiento" name="fecha_de_nacimiento" required>
+                    <span id="errorFecha_de_nacimiento" class="error"></span>
                 </div>
                 <div class="mb-3">
                     <label for="rol" class="form-label">Rol</label>
@@ -75,7 +87,7 @@
                 </div>
                 <div class="col-12 text-center">
                     <input type="hidden" name="method" value="store">
-                    <button type="submit" class="btn btn-primary w-100">Crear Usuario</button>
+                    <button type="submit" id="registrar" class="btn btn-primary w-100">Registrarse</button>
                 </div>
             </form>
                     </div>
@@ -95,6 +107,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
         <script src="public/javascript/navbarUtil.js"> </script>
+        <script src="../../public/javascript/registroUtil.js"></script>
     </body>
 </html>
 

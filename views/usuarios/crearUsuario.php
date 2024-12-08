@@ -32,6 +32,11 @@
                     <input type="text" class="form-control" id="apellidos" name="apellidos" required>
                 </div>
                 <div class="mb-3">
+                    <label for="username" class="form-label"> Alias </label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                    <span id="errorApellidos" class="error"></span>
+                </div>
+                <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required>
                 </div>

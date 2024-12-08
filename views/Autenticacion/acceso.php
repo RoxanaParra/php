@@ -55,12 +55,10 @@
                     </form>
                 </div>
             </div>
-                    
-                <div class="card-body" id="Centrar">
-                    <a href='#' class="card-link">Olvide mi Contraseña</a>
-                </div>
-            </div>
         </div>
+        
+        </div>
+    
     </div>
 
    
