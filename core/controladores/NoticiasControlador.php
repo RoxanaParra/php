@@ -32,8 +32,7 @@
         $Noticia = $stmt->fetchAll();
     
         if (empty($Noticia)) {
-            echo "No se encontraron noticias en la base de datos.";
-            exit;
+            return [];
         }
     
         return $Noticia;

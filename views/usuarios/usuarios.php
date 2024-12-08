@@ -58,7 +58,7 @@
                                         <input type="hidden" name="idUser" value="'.$usuario['idUser'].'">
                                         <input type="hidden" name="method" value="delete">
                                         <button type="submit" class="btn btn-danger">
-                                        <i class="fa fa-trash icon-small"></i>
+                                            <i class="fa fa-trash icon-small"></i>
                                         </button>
                                     </form>
                                 </td>

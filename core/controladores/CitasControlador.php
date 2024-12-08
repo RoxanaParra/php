@@ -31,8 +31,7 @@ function index() {
     $citas = $stmt->fetchAll();
 
     if (empty($citas)) {
-        echo "No se encontraron citas en la base de datos.";
-        exit;
+        return [];
     }
 
     return $citas;
