@@ -66,13 +66,19 @@ function handleRequest() {
 function index() {
     $pdo = crearConexion();
 
-    $idUser = $_SESSION['user']['idUser'];
+    if($_SESSION['user']['rol'] === 'admin') {
+        $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser";
+    } else {
+        $idUser = $_SESSION['user']['idUser'];
 
-    $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser WHERE users_data.idUser = :idUser";
+        $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser WHERE users_data.idUser = :idUser";
+    }
 
     $stmt = $pdo->prepare($sql);
 
-    $stmt->bindParam(':idUser', $idUser);
+    if(isset($idUser)) {
+        $stmt->bindParam(':idUser', $idUser);
+    }
 
     $stmt->execute();
 
@@ -83,6 +89,22 @@ function index() {
     }
 
     return $citas;
+}
+
+function mostrarCita() {
+    $pdo = crearConexion();
+
+    $idCita = $_GET['id'];
+
+    $sql = "SELECT * FROM citas WHERE idCita = :idCita";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':idCita', $idCita);
+
+    $stmt->execute();
+
+    return $stmt->fetch();
 }
 
 function crearCita(): void {

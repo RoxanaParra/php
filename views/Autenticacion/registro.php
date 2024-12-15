@@ -66,15 +66,6 @@
                                 <span id="errorFecha" class="error text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label for="rol" class="form-label">Rol</label>
-                                <select class="form-select" id="rol" name="rol" required>
-                                    <option value="" selected>Seleccione un rol</option>
-                                    <option value="user">Usuario</option>
-                                    <option value="admin">Administrador</option>
-                                    <span id="errorRol" class="error text-danger"></span>
-                                </select>
-                            </div>
-                            <div class="mb-3">
                                 <label for="sexo" class="form-label">Sexo</label>
                                 <select class="form-select" id="sexo" name="sexo" required>
                                     <option value="" selected>Seleccione un sexo</option>

@@ -25,9 +25,7 @@
 
       $usuarios = ObtenerUsuarios();
 
-      $idCita = $_GET['id'];
-      
-      $cita = mostrarCita($idCita);
+      $cita = mostrarCita();
 
     ?>
     
@@ -39,7 +37,7 @@
             <!-- Campo para la fecha de la cita -->
             <div class="mb-3">
               <label for="fecha_cita" class="form-label">Fecha</label>
-              <input type="date" class="form-control" id="fecha_cita" name="fecha_cita" required value="<?= $cita['fecha_cita'] ?>">
+              <input type="date" class="form-control" id="fecha_cita" name="fecha_cita" required value="<?= $cita['fecha_cita'] ?>" required min="<?php echo date('Y-m-d'); ?>">
             </div>
 
              <!-- Campo para el id del usuario -->

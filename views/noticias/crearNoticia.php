@@ -38,7 +38,7 @@
         <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
             <div class="card" style="width: 30rem;">
                 <div class="card-body">    
-                <form action="../../core/controladores/NoticiasControlador.php" method="POST" class="row g-3">
+                <form action="../../core/controladores/NoticiasControlador.php" method="POST" class="row g-3" enctype="multipart/form-data">
                 <div class="mb-3">
                             <label for="titulo" class="form-label">Título</label>
                             <input type="text" class="form-control" id="titulo" name="titulo" required>
@@ -71,7 +71,7 @@
 
                         <div class="mb-3">
                             <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            <input type="date" class="form-control" id="fecha" name="fecha" required min="<?php echo date('Y-m-d'); ?>">
                             <span id="errorFecha" class="text-danger"></span>
                         </div>
 

@@ -12,7 +12,7 @@ function handleRequest() {
                 eliminarUsuario();
                 break;
             case 'update':
-                editarUsuario($_POST['idUser']);
+                editarUsuario();
                 break;
             case 'register':
                 registerUser();
@@ -22,6 +22,9 @@ function handleRequest() {
                 break;
             case 'logout':
                 logoutUser();
+                break;
+            case 'updateProfile':
+                updateProfile();
                 break;
         }
     }
@@ -76,7 +79,7 @@ function saveUser() {
     $phone = $_POST['telefono'];
     $birthdate = $_POST['fecha_de_nacimiento'];
     $gender = $_POST['sexo'];
-    $role = $_POST['rol'];
+    $role = isset($_POST['rol']) ? $_POST['rol'] : 'user';
     $username = $_POST['usuario'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
@@ -180,9 +183,78 @@ function logoutUser() {
     exit();
 }
 
-function editarUsuario(int $id) {
+function updateProfile() {
     $pdo = crearConexion();
 
+    $idUser = $_POST['idUser'];
+    $name = $_POST['nombre'];
+    $lastname = $_POST['apellidos'];
+    $email = $_POST['email'];
+    $password = isset($_POST['password']) ? $_POST['password'] : null;
+    $role = $_POST['rol'];
+    $username = $_POST['usuario'];
+
+    if(! empty($_POST['password']) && ! password_verify($_POST['password'], $password)) {
+        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
+        $sql = "UPDATE users_data 
+            JOIN users_login ON users_data.idUser = users_login.idUser 
+            SET users_data.nombre = :nombre, 
+                users_data.apellidos = :apellidos,
+                users_data.email = :email,
+                users_login.password = :password,
+                users_login.usuario = :usuario,
+                users_login.rol = :rol
+            WHERE users_data.idUser = :id";
+    }else {
+        $sql = "UPDATE users_data   
+                JOIN users_login ON users_data.idUser = users_login.idUser 
+                SET users_data.nombre = :nombre, 
+                    users_data.apellidos = :apellidos,
+                    users_data.email = :email,
+                    users_login.usuario = :usuario,
+                    users_login.rol = :rol
+                WHERE users_data.idUser = :id";
+    }
+
+    $stmt = $pdo->prepare($sql);
+
+    if (! empty($password)) {
+        $stmt->bindParam(':password', $password);
+    }
+
+    $stmt->bindParam(':nombre', $name);
+    $stmt->bindParam(':apellidos', $lastname);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':rol', $role);
+    $stmt->bindParam(':usuario', $username);
+    $stmt->bindParam(':id', $idUser);
+
+    if ($stmt->execute()) {
+        $sql = "SELECT * FROM users_data JOIN users_login ON users_data.idUser = users_login.idUser WHERE users_login.idUser = :id";
+
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindParam(':id', $idUser);
+
+        $stmt->execute();
+
+        session_start();
+
+        $_SESSION['user'] = $stmt->fetch();
+
+        header('Location: ../../views/usuarios/usuarios.php');
+        exit();
+    } else {
+        header('Location: ../../views/usuarios/perfil.php');
+        exit();
+    }
+}
+
+function editarUsuario() {
+    $pdo = crearConexion();
+
+    $id= $_POST['idUser'];
     $name = $_POST['nombre'];
     $lastname = $_POST['apellidos'];
     $email = $_POST['email'];
@@ -192,7 +264,6 @@ function editarUsuario(int $id) {
     $gender = $_POST['sexo'];
     $role = $_POST['rol'];
     $username = $_POST['usuario'];
-    $idUser = $_POST['idUser'];
     $password = $_POST['password'];
 
     if(! empty($_POST['password']) && ! password_verify($_POST['password'], $password)) {
@@ -209,12 +280,13 @@ function editarUsuario(int $id) {
                 users_data.fecha_de_nacimiento = :fecha_de_nacimiento,
                 users_data.sexo = :sexo,
                 users_login.usuario = :usuario,
-                users_login.rol = :rol" .
-                ($password ? ", users_login.password = :password" : "") .
-           "WHERE users_data.idUser = :id";
+                users_login.rol = :rol" . 
+                ($password ? ", users_login.password = :password" : "") . 
+           " WHERE users_data.idUser = :id";
 
     $stmt = $pdo->prepare($sql);
 
+    // Bind parameters
     $stmt->bindParam(':nombre', $name);
     $stmt->bindParam(':apellidos', $lastname);
     $stmt->bindParam(':email', $email);
@@ -224,9 +296,10 @@ function editarUsuario(int $id) {
     $stmt->bindParam(':sexo', $gender);
     $stmt->bindParam(':rol', $role);
     $stmt->bindParam(':usuario', $username);
-    $stmt->bindParam(':id', $idUser);
+    $stmt->bindParam(':id', $id);
 
-    if ($password) {
+    // Only bind the password if it is set
+    if (! empty($password)) {
         $stmt->bindParam(':password', $password);
     }
 

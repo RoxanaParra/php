@@ -27,7 +27,7 @@
                 <h5 class="card-title text-center mb-4">Perfil</h5>
                 <p><strong>Nombre de usuario:</strong> <?php echo $usuarioActual["usuario"] ?? 'No definido'; ?></p>
 
-                <form method="POST" action="../../core/controladores/editarPerfil.php" class="row g-3">
+                <form method="POST" action="../../core/controladores/UsuariosControlador.php" class="row g-3">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" 
@@ -41,15 +41,32 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="usuario" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="usuario" name="usuario" 
+                               value="<?php echo $usuarioActual["usuario"] ?? ''; ?>" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="email" class="form-label">Correo Electrónico</label>
                         <input type="email" class="form-control" id="email" name="email" 
                                value="<?php echo $usuarioActual["email"] ?? ''; ?>" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="nueva_contrasena" class="form-label">Nueva Contraseña</label>
-                        <input type="password" class="form-control" id="nueva_contrasena" name="nueva_contrasena" required>
+                        <label for="rol" class="form-label">Rol</label>
+                        <select class="form-select" id="rol" name="rol">
+                            <option value="admin" <?php echo $usuarioActual["rol"] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
+                            <option value="user" <?php echo $usuarioActual["rol"] === 'user' ? 'selected' : ''; ?> >Usuario</option>
+                        </select>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+
+                    <input type="hidden" name="idUser" value="<?php echo $usuarioActual['idUser']; ?>">
+                    <input type="hidden" name="method" value="updateProfile">
 
                     <div class="col-12 text-center">
                         <button type="submit" name="actualizar" class="btn btn-primary">Actualizar Perfil</button>

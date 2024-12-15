@@ -58,7 +58,11 @@
         $pdo = crearConexion(); 
 
         $titulo = $_POST ['titulo'];
-        $imagen = $_POST['imagen'];
+        $imagen = $_FILES['imagen']['name'];
+        
+        $rutaImagen = '../../public/media/' . $imagen;
+        move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaImagen);
+
         $texto = $_POST ['texto'];
         $fecha = date('Y-m-d');
         $idUser = $_POST['idUser'];
@@ -69,7 +73,7 @@
         $stmt = $pdo->prepare($sql);
 
         $stmt->bindParam(':titulo', $titulo);
-        $stmt->bindParam(':imagen', $imagen);
+        $stmt->bindParam(':imagen', $rutaImagen);
         $stmt->bindParam(':texto', $texto);
         $stmt->bindParam(':fecha', $fecha);
         $stmt->bindParam(':idUser', $idUser);
@@ -109,6 +113,10 @@
             $fecha = $_POST['fecha'];
             $texto = $_POST['texto'];
             $imagen = $_FILES['imagen']['name'];
+            
+            $rutaImagen = '../../public/media/' . $imagen;
+            move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaImagen);
+
             $idUser = $_POST['idUser'];
 
             $sql = "UPDATE noticias SET 
@@ -124,7 +132,7 @@
             $stmt->bindParam(':titulo', $titulo);
             $stmt->bindParam(':fecha', $fecha);
             $stmt->bindParam(':texto', $texto);
-            $stmt->bindParam(':imagen', $imagen);
+            $stmt->bindParam(':imagen', $rutaImagen);
             $stmt->bindParam(':idNoticia', $idNoticia);
             $stmt->bindParam(':idUser', $idUser);
 

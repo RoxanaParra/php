@@ -43,6 +43,13 @@ if (!$user) {
 }
 ?>
 
+
+<script>
+    const idUser = <?= $userId ?>;
+
+    console.log(idUser);
+</script>
+
 <div class="EspacioDebajoDelNavbar"></div>
 
 <div class="container mt-5">
