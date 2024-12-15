@@ -38,36 +38,41 @@
         <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
             <div class="card" style="width: 30rem;">
                 <div class="card-body">    
-                    <form action="../../core/controladores/NoticiasControlador.php" method="POST" class="row g-3">
-                        <div class="mb-3">
+                <form action="../../core/controladores/NoticiasControlador.php" method="POST" class="row g-3">
+                <div class="mb-3">
                             <label for="titulo" class="form-label">Título</label>
                             <input type="text" class="form-control" id="titulo" name="titulo" required>
+                            <span id="errorTitulo" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label for="texto" class="form-label">Texto</label>
-                            <textarea class="form-control" id="texto" name="texto"></textarea>
+                            <textarea class="form-control" id="texto" name="texto" required></textarea>
+                            <span id="errorTexto" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label for="imagen" class="form-label">Imagen</label>
-                            <input type="file" class="form-control" id="imagen" name="imagen">
+                            <input type="file" class="form-control" id="imagen" name="imagen" >
+                            <span id="errorImagen" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label for="idUser" class="form-label">Usuario</label>
-                            <select class="form-select" id="idUser" name="idUser">
+                            <select class="form-select" id="idUser" name="idUser" required>
                                 <?php foreach ($usuarios as $usuario): ?>
                                     <option value="<?= htmlspecialchars($usuario['idUser']) ?>">
                                         <?= htmlspecialchars($usuario['nombre']) ?> <?= htmlspecialchars($usuario['apellidos']) ?>
                                     </option>
                                 <?php endforeach; ?>
+                            <span id="errorUsuario" class="text-danger"></span>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="fecha" class="form-label">Fecha</label>
                             <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            <span id="errorFecha" class="text-danger"></span>
                         </div>
 
                         <div class="col-12 text-center">

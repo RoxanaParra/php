@@ -1,7 +1,50 @@
 <?php
 
 require_once __DIR__ . '/../conexion/conexion.php';
+
 function handleRequest() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Obtener el usuario activo
+    $usuarioActivo = $_SESSION['user'] ?? null;
+
+    if (!$usuarioActivo) {
+        header('Location: ../../index.php');
+        exit();
+    }
+
+    // Crear la conexión
+    $pdo = crearConexion();
+
+    // Inicializar variables
+    $sql = '';
+    $params = [];
+
+    // Verificar el rol del usuario y construir la consulta SQL
+    if ($usuarioActivo['rol'] === 'admin') {
+        // Los administradores ven todas las citas
+        $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser";
+    } else {
+        // Los usuarios estándar ven solo sus citas
+        $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser WHERE users_data.idUser = :idUser";
+        $params = [':idUser' => $usuarioActivo['idUser']];
+    }
+
+    // Preparar la consulta
+    $stmt = $pdo->prepare($sql);
+
+    // Ejecutar la consulta con los parámetros adecuados
+    $stmt->execute($params);
+
+    // Obtener las citas
+    $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $citas ?: [];
+}
+
+
     if (isset($_POST['method'])) {
         switch ($_POST['method']) {
             case 'store':
@@ -18,21 +61,14 @@ function handleRequest() {
                 break;
         }
     }
-}
+
 
 function index() {
     $pdo = crearConexion();
 
     $idUser = $_SESSION['user']['idUser'];
 
-    //TODO: HACER QUE EL USUARIO NO PUEDA VER LAS CITAS DE OTROS USUARIOS
-    //Si el usuario es admin, puede ver todas las citas
-    // Si el usuario es user solo pueder ver su cita (ASI ES COMO SE LOS DEJE FUNCIONANDO)
-
     $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser WHERE users_data.idUser = :idUser";
-
-    //SI ES ADMIN USAR ESTE SQL
-    // $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser";
 
     $stmt = $pdo->prepare($sql);
 
@@ -72,21 +108,6 @@ function crearCita(): void {
         header('Location: ../../views/citas/crearCita.php');
         exit();
     }
-}
-
-function mostrarCita(int $id) {
-
-        $pdo = crearConexion();
-    
-        $sql = "SELECT * FROM citas JOIN users_data ON citas.idUser = users_data.idUser WHERE citas.idCita = :idCita";
-    
-        $stmt = $pdo->prepare($sql);
-    
-        $stmt->bindParam(':idCita', $id);
-    
-        $stmt->execute();
-        
-        return $stmt->fetch();
 }
 
 

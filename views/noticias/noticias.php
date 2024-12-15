@@ -31,38 +31,36 @@
 
 <div class="container">
     <h2 class="text-center mt-5 mb-5">Noticias</h2>
-    <div class="row">
-        <div class="container my-5">
-            <?php foreach ($noticiasList as $noticias): ?>
-                <div class="col">
-                    <div class="card h-100">
-                        <?php if (!empty($noticias['imagen'])): ?>
-                            <img src="<?= htmlspecialchars($noticias['imagen']) ?>" class="card-img-top" alt="Imagen de la noticia">
-                        <?php endif; ?>
-                        <div class="card-body">
-                            <h5 class="card-title">#<?= htmlspecialchars($noticias['idNoticia']) ?> - <?= htmlspecialchars($noticias['titulo']) ?></h5>
-                            <p class="card-text"><?= htmlspecialchars($noticias['texto']) ?></p>
+    <div class="row g-4"> <!-- Clase g-4 para espacio entre tarjetas -->
+        <?php foreach ($noticiasList as $noticias): ?>
+            <div class="col-12 col-sm-6 col-md-4"> <!-- 3 columnas en pantallas medianas -->
+                <div class="card h-100">
+                    <?php if (!empty($noticias['imagen'])): ?>
+                        <img src="<?= htmlspecialchars($noticias['imagen']) ?>" class="card-img-top" alt="Imagen de la noticia">
+                    <?php endif; ?>
+                    <div class="card-body">
+                        <h5 class="card-title">#<?= htmlspecialchars($noticias['idNoticia']) ?> - <?= htmlspecialchars($noticias['titulo']) ?></h5>
+                        <p class="card-text"><?= htmlspecialchars($noticias['texto']) ?></p>
+                    </div>
+                    <?php if (isset($_SESSION['user']) && $_SESSION['user']['rol'] === 'admin'): ?>
+                        <div class="d-flex justify-content-end">
+                            <a href="../../views/noticias/editarNoticia.php?id=<?= htmlspecialchars($noticias['idNoticia']) ?>" class="btn btn-primary me-2">Editar</a>
+                            <form action="../../core/controladores/NoticiasControlador.php" method="POST">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($noticias['idNoticia']) ?>">
+                                <input type="hidden" name="method" value="delete">
+                                
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
                         </div>
-                        <?php if (isset($_SESSION['user']) && $_SESSION['user']['rol'] === 'admin'): ?>
-                            <div class="d-flex justify-content-end">
-                                    <a href="../../views/noticias/editarNoticia.php?id=<?= htmlspecialchars($noticias['idNoticia']) ?>" class="btn btn-primary me-2">Editar</a>
-                                    <form action="../../core/controladores/NoticiasControlador.php" method="POST">
-                                        <input type="hidden" name="id" value="<?= htmlspecialchars($noticias['idNoticia']) ?>">
-                                        <input type="hidden" name="method" value="delete">
-                                        
-                                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                                    </form>
-                            </div>
-                        <?php endif; ?>
-                            <div class="card-footer">
-                                <small class="text-muted">Fecha: <?= htmlspecialchars($noticias['fecha']) ?></small>
-                            </div>
+                    <?php endif; ?>
+                    <div class="card-footer">
+                        <small class="text-muted">Fecha: <?= htmlspecialchars($noticias['fecha']) ?></small>
                     </div>
                 </div>
-            <?php endforeach; ?>
-        </div>
+            </div>
+        <?php endforeach; ?>
     </div>
-    <div class="col-md-12 mb-3">
+    <div class="col-md-12 mt-4">
         <?php if (isset($_SESSION['user']) && $_SESSION['user']['rol'] === 'admin'): ?>
             <a href="../../views/noticias/crearNoticia.php" class="btn btn-primary">Crear Noticia</a>
         <?php endif; ?>

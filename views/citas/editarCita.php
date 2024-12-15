@@ -47,7 +47,7 @@
               <label for="idUser" class="form-label">Usuario</label>
               <select class="form-select" id="idUser" name="idUser">
                 <?php foreach ($usuarios as $usuario): ?>
-                  <option value="<?= $usuario['idUser'] ?>" <?= $usuario['idUser'] == $cita['idUser'] ? 'selected' : '' ?>><?= $usuario['nombre'] ?> <?= $usuario['apellido'] ?></option>
+                  <option value="<?= $usuario['idUser'] ?>" <?= $usuario['idUser'] == $cita['idUser'] ? 'selected' : '' ?>><?= $usuario['nombre'] ?> <?= $usuario['apellidos'] ?></option>
                 <?php endforeach; ?>
               </select>
             </div>

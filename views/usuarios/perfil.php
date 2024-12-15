@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noticias sobre Regalos Personalizados</title>
+    <title>Perfil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../public/css/estilos.css">
 </head>
@@ -18,38 +18,52 @@
         </div>
     <body>
 
+    <div class="EspacioDebajoDelNavbarNoticia"></div>
+
     
-    <div class="container d-flex justify-content-center align-items-center" >
-        <div class="card" style="width: 18rem;">
-    
-            <img src="../../public/img/fondo.png" class="card-img-top" alt="...">
-            
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="card" style="width: 30rem;">
             <div class="card-body">
-                <p>
-                    <strong>Nombre de usuario:</strong> <?php echo $usuarioActual["usuario"] ?? 'No definido'; ?>
-                </p>
-            
-                <form action="../../core/auth/profile.php" method="POST">
-                    <h5 class="card-title">Editar Perfil</h5>
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" name="nombre" id="nombre" value="<?php echo $usuarioActual["nombre"]; ?>" required><br><br>
+                <h5 class="card-title text-center mb-4">Perfil</h5>
+                <p><strong>Nombre de usuario:</strong> <?php echo $usuarioActual["usuario"] ?? 'No definido'; ?></p>
 
-                    <label for="apellidos">Apellidos:</label>
-                    <input type="text" name="apellidos" id="apellidos" value="<?php echo $usuarioActual["apellidos"]; ?>" required><br><br>
+                <form method="POST" action="../../core/controladores/editarPerfil.php" class="row g-3">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" 
+                               value="<?php echo $usuarioActual["nombre"] ?? ''; ?>" required>
+                    </div>
 
-                    <label for="email">Correo electrónico:</label>
-                    <input type="email" name="email" id="email" value="<?php echo $usuarioActual["email"]; ?>" required><br><br>
+                    <div class="mb-3">
+                        <label for="apellidos" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="apellidos" name="apellidos" 
+                               value="<?php echo $usuarioActual["apellidos"] ?? ''; ?>" required>
+                    </div>
 
-                    <label for="nueva_contrasena">Nueva contraseña:</label>
-                    <input type="password" name="nueva_contrasena" id="nueva_contrasena" required><br><br>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" 
+                               value="<?php echo $usuarioActual["email"] ?? ''; ?>" required>
+                    </div>
 
-                    <button type="submit" name="actualizar">Actualizar perfil</button>
+                    <div class="mb-3">
+                        <label for="nueva_contrasena" class="form-label">Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="nueva_contrasena" name="nueva_contrasena" required>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <button type="submit" name="actualizar" class="btn btn-primary">Actualizar Perfil</button>
+                        <?php if (isset($_GET['mensaje']) && $_GET['mensaje'] === 'actualizado'): ?>
+                            <div class="alert alert-success" role="alert">
+                                Perfil actualizado correctamente.
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 </form>
             </div>
         </div>
-        
-        </div>
     </div>
+
     
     <div id="footer">
         <?php include_once('../../footer.php') ?>

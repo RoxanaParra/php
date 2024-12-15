@@ -10,7 +10,7 @@ function registroUsuario() {
     $telefono = $_POST['telefono'];
     $fechaNacimiento = $_POST['fechaNacimiento'];
     $direccion = $_POST['direccion'];
-    $sexo = $_POST['sexo'];  // Solo una variable 'sexo'
+    $sexo = $_POST['sexo'];  
 
     // Guardar en user_login
     $nombreUsuario = $_POST['nombreUsuario'];

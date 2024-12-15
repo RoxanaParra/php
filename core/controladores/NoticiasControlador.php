@@ -3,12 +3,20 @@
     require_once __DIR__ . '/../conexion/conexion.php';
 
     function handleRequest() {
-        $usuarioActivo = $_SESSION['user'];
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Solo se ejecutan estas acciones si el usuario es administrador
+        if (isset($_POST['method'])) {
+        $usuarioActivo = $_SESSION['user'] ?? null;
 
         if (! isset($usuarioActivo) || $usuarioActivo['rol'] !== 'admin') {
             header('Location: ../../index.php');
             exit();
         }
+
+     }
 
         if (isset($_POST ['method'])) {
             switch ($_POST ['method']) {
