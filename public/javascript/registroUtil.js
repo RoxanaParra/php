@@ -4,7 +4,6 @@ function validarFormulario() {
         const apellidos = document.getElementById('apellidos');
         const email = document.getElementById('email');
         const password = document.getElementById('password');
-        const direccion = document.getElementById('direccion');
         const telefono = document.getElementById('telefono');
         const fechaNacimiento = document.getElementById('fecha_de_nacimiento');
         const rol = document.getElementById('rol');
@@ -15,7 +14,7 @@ function validarFormulario() {
         const regexApellidos = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{1,40}$/;
         const regexTelefono = /^[0-9]{9}$/;
         const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const regexPassword = /^[a-zA-Z0-9.,]{1,8}$/;
+        const regexPassword = /^(?:[a-zA-Z\d@$!%*?&]{8,})$/;
 
         let esValido = false;
 
@@ -31,15 +30,13 @@ function validarFormulario() {
             document.getElementById('errorPassword').textContent = "";
 
         }
-        
-            borrarErrores()
-
+    
         // Validaciones
         nombre.addEventListener('input', function() {
             const nombre = this.value;
     
             if (! regexNombre.test(nombre)) {
-                document.getElementById('errorNombre').textContent = "El nombre solo debe contener letras y máximo 15 caracteres.";
+                document.getElementById('errorNombre').innerHTML = "El nombre solo debe contener letras y máximo 15 caracteres.";
                 
                 esValido = false;
                 return;
@@ -48,6 +45,8 @@ function validarFormulario() {
     
             document.getElementById('errorNombre').textContent = "";
             esValido = true;
+
+            document.getElementById('errorNombre').textContent = "";
     
             return;
         });
@@ -107,11 +106,11 @@ function validarFormulario() {
         });
     
         // Validación para la fecha de nacimiento
-        fechaNacimiento.addEventListener('input', function () {
+        fechaNacimiento.addEventListener('change', function () {
             const valorFecha = this.value;
             const fechaActual = new Date().toISOString().split('T')[0]; // Fecha actual en formato YYYY-MM-DD
     
-            if (valorFecha === '' || valorFecha >= fechaActual) {
+            if (valorFecha >= fechaActual || valorFecha === 'mm/dd/yyyy') {
                 document.getElementById('errorFecha').textContent = "La fecha de nacimiento debe ser anterior al día actual.";
                 esValido = false;
             } else {
@@ -153,6 +152,8 @@ function validarFormulario() {
                 event.preventDefault();
                 alert('Por favor, corrige los errores en el formulario antes de enviarlo.');
             }
+
+            borrarErrores();
         });
  }
 validarFormulario();

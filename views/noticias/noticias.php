@@ -40,7 +40,7 @@
                     <?php endif; ?>
                     <div class="card-body">
                         <h5 class="card-title">#<?= htmlspecialchars($noticias['idNoticia']) ?> - <?= htmlspecialchars($noticias['titulo']) ?></h5>
-                        <p class="card-text"><?= htmlspecialchars($noticias['texto']) ?></p>
+                        <p class="card-text"><?= htmlspecialchars(substr($noticias['texto'], 0, 255)) . '...' ?> <a href="../../views/noticias/mostrarNoticia.php?id=<?= htmlspecialchars($noticias['idNoticia']) ?>">Leer más</a></p>
                     </div>
                     <?php if (isset($_SESSION['user']) && $_SESSION['user']['rol'] === 'admin'): ?>
                         <div class="d-flex justify-content-end">

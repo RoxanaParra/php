@@ -93,7 +93,7 @@
     function mostrarNoticia(int $id) {
         $pdo = crearConexion();
 
-        $sql = "SELECT * FROM noticias WHERE idNoticia = :idNoticia";
+        $sql = "SELECT * FROM noticias JOIN users_data ON noticias.idUser = users_data.idUser WHERE idNoticia = :idNoticia";
 
         $stmt = $pdo->prepare($sql);
 

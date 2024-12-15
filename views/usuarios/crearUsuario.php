@@ -17,6 +17,13 @@
 
 <div class="EspacioDebajoDelNavbar"></div>
 
+<?php
+    if(isset($_SESSION['error'])) {
+        echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
+        unset($_SESSION['error']);
+    }
+?>
+
 <!-- Contenedor Principal -->
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="card shadow-lg p-4" style="width: 30rem;">

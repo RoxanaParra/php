@@ -20,13 +20,19 @@
         </div>
 
         <div class="EspacioDebajoDelNavbar"></div>
-
  
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
                 <h3>Registro de Usuario</h3>
             </div>
+
+            <?php
+                if(isset($_SESSION['error'])) {
+                    echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
+                    unset($_SESSION['error']);
+                }
+            ?>
 
                 <div class="card-body">
                     <div class="container">
@@ -91,7 +97,7 @@
 
  <!---Se define un div que alberga el footer, es manipulado a través de un archivo de php-->
         
- <div id="footer">
+    <div id="footer">
         <?php include_once('../../footer.php') ?>
     </div>
         
@@ -100,7 +106,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        <script src="../../public/javascript/navbarUtil.js"> </script>
         <script src="../../public/javascript/registroUtil.js"></script>
     </body>
 </html>

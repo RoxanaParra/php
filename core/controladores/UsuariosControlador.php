@@ -69,6 +69,33 @@ function ObtenerUltimoIdUser() {
     return $stmt->fetch();
 }
 
+function checkIfUserExists($username, $email) {
+    $pdo = crearConexion();
+
+    $checkIfUserExists = "SELECT * FROM users_login JOIN users_data ON users_login.idUser = users_data.idUser WHERE users_login.usuario = :usuario OR users_data.email = :email";
+    $checkIfUserExistsStmt = $pdo->prepare($checkIfUserExists);
+    $checkIfUserExistsStmt->bindParam(':usuario', $username);
+    $checkIfUserExistsStmt->bindParam(':email', $email);
+    $checkIfUserExistsStmt->execute();
+    
+    $userExists = $checkIfUserExistsStmt->fetch();
+
+    if($userExists) {
+        session_start();
+        $_SESSION['error'] = "El usuario o el email ya existe";
+
+        if (basename($_SERVER['HTTP_REFERER']) == 'registro.php') {
+            header('Location: ../../views/Autenticacion/registro.php');
+        } elseif (basename($_SERVER['HTTP_REFERER']) == 'crearUsuario.php') {
+            header('Location: ../../views/usuarios/crearUsuario.php');
+        } else {
+            header('Location: ../../views/Autenticacion/registro.php');
+        }
+ 
+        exit();
+    }
+}
+
 function saveUser() {
     $pdo = crearConexion();
 
@@ -82,6 +109,8 @@ function saveUser() {
     $role = isset($_POST['rol']) ? $_POST['rol'] : 'user';
     $username = $_POST['usuario'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
+    checkIfUserExists($username, $email);
 
     $sql = "INSERT INTO users_data (nombre, apellidos, email, direccion, telefono, fecha_de_nacimiento, sexo) 
             VALUES (:nombre, :apellidos, :email, :direccion, :telefono, :fecha_de_nacimiento, :sexo)";
