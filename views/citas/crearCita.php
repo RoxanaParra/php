@@ -55,7 +55,7 @@
             <!-- Campo para la descripción de la cita -->
             <div class="mb-3">
               <label for="motivo_cita" class="form-label">Motivo</label>
-              <textarea class="form-control" id="motivo_cita" name="motivo_cita" rows="5"></textarea>
+              <textarea class="form-control" id="motivo_cita" name="motivo_cita" required rows="5"></textarea>
             </div>
 
             <!-- Campo oculto para indicar la acción (crear/almacenar) -->

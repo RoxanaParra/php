@@ -53,7 +53,7 @@
 
                         <div class="mb-3">
                             <label for="imagen" class="form-label">Imagen</label>
-                            <input type="file" class="form-control" id="imagen" name="imagen" >
+                            <input type="file" class="form-control" id="imagen" name="imagen" required>
                             <span id="errorImagen" class="text-danger"></span>
                         </div>
 

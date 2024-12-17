@@ -59,18 +59,22 @@ if (!$user) {
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" required value="<?= $user['nombre'] ?>">
+                    <span id="errorNombre" class="error text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label for="apellidos" class="form-label">Apellidos</label>
                     <input type="text" class="form-control" id="apellidos" name="apellidos" required value="<?= $user['apellidos'] ?>">
+                    <span id="errorApellidos" class="error text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required value="<?= $user['email'] ?>">
+                    <span id="errorEmail" class="error text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="password" name="password" required value="<?= empty($user['password']) ? '' : $user['password'] ?>">
+                    <span id="errorPassword" class="error text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label for="nickname" class="form-label">Alias</label>
@@ -83,21 +87,23 @@ if (!$user) {
                 <div class="mb-3">
                     <label for="telefono" class="form-label">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" name="telefono" required value="<?= $user['telefono'] ?>">
+                    <span id="errorTelefono" class="error text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label for="fecha_de_nacimiento" class="form-label">Fecha de Nacimiento</label>
                     <input type="date" class="form-control" id="fecha_de_nacimiento" name="fecha_de_nacimiento" required value="<?= $user['fecha_de_nacimiento'] ?>">
+                    <span id="errorFecha" class="error text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label for="rol" class="form-label">Rol</label>
-                    <select class="form-select" id="rol" name="rol">
+                    <select class="form-select" id="rol" name="rol" required>
                         <option value="admin" <?= $user['rol'] == 'admin' ? 'selected' : '' ?>>Administrador</option>
                         <option value="user" <?= $user['rol'] == 'user' ? 'selected' : '' ?>>Usuario</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="sexo" class="form-label">Sexo</label>
-                    <select class="form-select" id="sexo" name="sexo">
+                    <select class="form-select" id="sexo" name="sexo" required>
                         <option value="M" <?= $user['sexo'] == 'M' ? 'selected' : '' ?>>Masculino</option>
                         <option value="F" <?= $user['sexo'] == 'F' ? 'selected' : '' ?>>Femenino</option>
                     </select>
@@ -122,5 +128,6 @@ if (!$user) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="../../public/javascript/navbarUtil.js"></script>
+<script src="../../public/javascript/editarUsuario.js"></script>
 </body>
 </html>

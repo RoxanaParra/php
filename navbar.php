@@ -109,7 +109,7 @@ $logo = ObtenerLogo();
                                 <form action="<?php echo $routes[9]; ?>" method="POST">
                                     <li>
                                         <input type="hidden" name="method" value="logout">
-                                        <button class="dropdown-item" type="submit">Logout</button>
+                                        <button class="dropdown-item" type="submit">Cerrar Sesión</button>
                                     </li>
                                 </form>
                             </ul>

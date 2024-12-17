@@ -47,7 +47,7 @@
             <!-- Fecha de publicación -->
             <div class="mb-3">
                 <label for="fecha" class="form-label">Fecha de Publicación</label>
-                <input type="date" class="form-control" id="fecha" name="fecha" value="<?= htmlspecialchars($Noticia['fecha']) ?>" required>
+                <input type="date" class="form-control" id="fecha" name="fecha" required min="<?php echo date('Y-m-d'); ?>" required>
             </div>
 
             <!-- Contenido de la noticia -->

@@ -221,7 +221,6 @@ function updateProfile() {
     $email = $_POST['email'];
     $password = isset($_POST['password']) ? $_POST['password'] : null;
     $role = $_POST['rol'];
-    $username = $_POST['usuario'];
 
     if(! empty($_POST['password']) && ! password_verify($_POST['password'], $password)) {
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
@@ -232,7 +231,6 @@ function updateProfile() {
                 users_data.apellidos = :apellidos,
                 users_data.email = :email,
                 users_login.password = :password,
-                users_login.usuario = :usuario,
                 users_login.rol = :rol
             WHERE users_data.idUser = :id";
     }else {
@@ -241,7 +239,6 @@ function updateProfile() {
                 SET users_data.nombre = :nombre, 
                     users_data.apellidos = :apellidos,
                     users_data.email = :email,
-                    users_login.usuario = :usuario,
                     users_login.rol = :rol
                 WHERE users_data.idUser = :id";
     }
@@ -256,7 +253,6 @@ function updateProfile() {
     $stmt->bindParam(':apellidos', $lastname);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':rol', $role);
-    $stmt->bindParam(':usuario', $username);
     $stmt->bindParam(':id', $idUser);
 
     if ($stmt->execute()) {
@@ -272,7 +268,7 @@ function updateProfile() {
 
         $_SESSION['user'] = $stmt->fetch();
 
-        header('Location: ../../views/usuarios/usuarios.php');
+        header('Location: ../../index.php');
         exit();
     } else {
         header('Location: ../../views/usuarios/perfil.php');

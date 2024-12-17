@@ -41,12 +41,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="usuario" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="usuario" name="usuario" 
-                               value="<?php echo $usuarioActual["usuario"] ?? ''; ?>" required>
-                    </div>
-
-                    <div class="mb-3">
                         <label for="email" class="form-label">Correo Electrónico</label>
                         <input type="email" class="form-control" id="email" name="email" 
                                value="<?php echo $usuarioActual["email"] ?? ''; ?>" required>
