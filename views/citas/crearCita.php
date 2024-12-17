@@ -18,10 +18,23 @@
         <?php 
             
             include_once('../../navbar.php');
+            include_once('../../core/controladores/CitasControlador.php');
 
             session_start();
 
             $activeUser = $_SESSION['user'];
+
+            if($activeUser['rol'] === 'admin') {
+                $usuarios = ObtenerUsuarios();
+            } else {
+                $usuarios = [
+                  [
+                    'idUser' => $activeUser['idUser'],
+                    'nombre' => $activeUser['nombre'],
+                    'apellidos' => $activeUser['apellidos']
+                  ]
+                ];
+            }
         ?>
     </div>
 
@@ -48,7 +61,9 @@
              <div class="mb-3">
               <label for="idUser" class="form-label">Usuario</label>
               <select class="form-select" id="idUser" name="idUser">
-                  <option value="<?= $activeUser['idUser'] ?>"><?= $activeUser['nombre'] ?> <?= $activeUser['apellidos'] ?></option>
+                <?php foreach ($usuarios as $usuario): ?>
+                  <option value="<?= $usuario['idUser'] ?>"><?= $usuario['nombre'] ?> <?= $usuario['apellidos'] ?></option>
+                <?php endforeach; ?>
               </select>
             </div>
 

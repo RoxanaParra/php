@@ -23,7 +23,19 @@
     <?php
       include_once('../../core/controladores/CitasControlador.php');
 
-      $usuarios = ObtenerUsuarios();
+      $activeUser = $_SESSION['user'];
+
+      if($activeUser['rol'] === 'admin') {
+          $usuarios = ObtenerUsuarios();
+      } else {
+          $usuarios = [
+            [
+              'idUser' => $activeUser['idUser'],
+              'nombre' => $activeUser['nombre'],
+              'apellidos' => $activeUser['apellidos']
+            ]
+          ];
+      }
 
       $cita = mostrarCita();
 

@@ -29,7 +29,7 @@
     <?php
 
         if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'admin') {
-            include_once '../../404.php';
+            include_once '../../405.php';
             exit();
         }
     ?>

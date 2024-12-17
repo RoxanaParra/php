@@ -47,14 +47,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="rol" class="form-label">Rol</label>
-                        <select class="form-select" id="rol" name="rol">
-                            <option value="admin" <?php echo $usuarioActual["rol"] === 'admin' ? 'selected' : ''; ?>>Administrador</option>
-                            <option value="user" <?php echo $usuarioActual["rol"] === 'user' ? 'selected' : ''; ?> >Usuario</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
                         <label for="password" class="form-label">Nueva Contraseña</label>
                         <input type="password" class="form-control" id="password" name="password">
                     </div>

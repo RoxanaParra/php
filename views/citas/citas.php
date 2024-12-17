@@ -31,6 +31,13 @@
 
         <div class="EspacioDebajoDelNavbar"></div>
 
+        <?php if(isset($_SESSION['error'])): ?>
+          <div class="alert alert-danger">
+            <?= $_SESSION['error'] ?>
+          </div>
+          <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
         <div class="container">
         <h2 class="text-center mt-5 mb-5">Citas</h2>
         <div class="grid-container">

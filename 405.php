@@ -6,7 +6,7 @@
     <title>Error 404</title>
 </head>
 <body>
-    <h1>Error 404</h1>
+    <h1>Error 405</h1>
     <p>No tiene permisos para acceder a esta pagina</p>
 </body>
 </html>

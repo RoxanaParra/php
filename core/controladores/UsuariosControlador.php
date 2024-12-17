@@ -220,39 +220,37 @@ function updateProfile() {
     $lastname = $_POST['apellidos'];
     $email = $_POST['email'];
     $password = isset($_POST['password']) ? $_POST['password'] : null;
-    $role = $_POST['rol'];
 
     if(! empty($_POST['password']) && ! password_verify($_POST['password'], $password)) {
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    }
 
+    if($password) {
         $sql = "UPDATE users_data 
             JOIN users_login ON users_data.idUser = users_login.idUser 
             SET users_data.nombre = :nombre, 
                 users_data.apellidos = :apellidos,
                 users_data.email = :email,
-                users_login.password = :password,
-                users_login.rol = :rol
+                users_login.password = :password
             WHERE users_data.idUser = :id";
     }else {
-        $sql = "UPDATE users_data   
-                JOIN users_login ON users_data.idUser = users_login.idUser 
-                SET users_data.nombre = :nombre, 
-                    users_data.apellidos = :apellidos,
-                    users_data.email = :email,
-                    users_login.rol = :rol
-                WHERE users_data.idUser = :id";
+        $sql = "UPDATE users_data 
+            JOIN users_login ON users_data.idUser = users_login.idUser 
+            SET users_data.nombre = :nombre, 
+                users_data.apellidos = :apellidos,
+                users_data.email = :email
+            WHERE users_data.idUser = :id";
     }
 
     $stmt = $pdo->prepare($sql);
 
-    if (! empty($password)) {
+    if($password) {
         $stmt->bindParam(':password', $password);
     }
 
     $stmt->bindParam(':nombre', $name);
     $stmt->bindParam(':apellidos', $lastname);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':rol', $role);
     $stmt->bindParam(':id', $idUser);
 
     if ($stmt->execute()) {

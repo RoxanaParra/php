@@ -22,6 +22,11 @@
         echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
         unset($_SESSION['error']);
     }
+
+    if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'admin') {
+        include_once '../../405.php';
+        exit();
+    }
 ?>
 
 <!-- Contenedor Principal -->

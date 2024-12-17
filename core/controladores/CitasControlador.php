@@ -91,10 +91,12 @@ function index() {
     return $citas;
 }
 
-function mostrarCita() {
+function mostrarCita($idCita = null) {
     $pdo = crearConexion();
 
-    $idCita = $_GET['id'];
+    if(! isset($idCita)) {
+        $idCita = $_GET['id'];
+    }
 
     $sql = "SELECT * FROM citas WHERE idCita = :idCita";
 
@@ -141,6 +143,8 @@ function editarCita(): void {
     $fecha_cita = $_POST['fecha_cita'];
     $idUser = $_POST['idUser'];
 
+    checarSiLaCitaEsAnteriorALaFechaActual($idCita);
+
     $sql = "UPDATE citas SET 
             motivo_cita = :motivo_cita, 
             fecha_cita = :fecha_cita,
@@ -162,33 +166,50 @@ function editarCita(): void {
         exit();
     }
 }
-    function eliminarCita() {
-        $pdo = crearConexion();
+function eliminarCita() {
+    $pdo = crearConexion();
 
-        $idCita = $_POST['id'];
-    
-        $sql = "DELETE FROM citas WHERE idCita = :idCita";
-    
-        $stmt = $pdo->prepare($sql);
-    
-        $stmt->bindParam(':idCita', $idCita);
-    
-        if ($stmt->execute()) {
-            header('Location: ../../views/citas/citas.php');
-            exit();
-        } else {
-            header('Location: ../../views/citas/citas.php');
-            exit();
-        }
+    $idCita = $_POST['id'];
+
+    checarSiLaCitaEsAnteriorALaFechaActual($idCita);
+
+    $sql = "DELETE FROM citas WHERE idCita = :idCita";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':idCita', $idCita);
+
+    if ($stmt->execute()) {
+        header('Location: ../../views/citas/citas.php');
+        exit();
+    } else {
+        header('Location: ../../views/citas/citas.php');
+        exit();
     }
+}
 
-    function ObtenerUsuarios() {
-        $pdo = crearConexion();
-    
-        $sql = "SELECT * FROM users_data";
-    
-        return $pdo->query($sql)->fetchAll();
+function ObtenerUsuarios() {
+    $pdo = crearConexion();
+
+    $sql = "SELECT * FROM users_data";
+
+    return $pdo->query($sql)->fetchAll();
+}
+
+function checarSiLaCitaEsAnteriorALaFechaActual($idCita) {
+    $cita = mostrarCita($idCita);
+
+    if($cita['fecha_cita'] <= date('Y-m-d')) {
+        session_start();
+
+        $_SESSION['error'] = 'No es posible editar una cita con una fecha anterior a la fecha actual';
+        
+        header('Location: ../../views/citas/citas.php');
+        
+        exit();
     }
+}
 
-    handleRequest();
+
+handleRequest();
 
